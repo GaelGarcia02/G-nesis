@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FiMenu } from "react-icons/fi";
 
 function Navbar() {
   const { logout } = useAuth();
@@ -26,7 +27,7 @@ function Navbar() {
           onClick={handleMenuToggle}
           className="lg:hidden focus:outline-none"
         >
-          Menú
+          <FiMenu className="text-3xl" />
         </button>
       </div>
       <div>
@@ -79,12 +80,14 @@ function Navbar() {
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
           <div className="bg-[#57ae60] h-full w-64 py-4 px-6 flex flex-col relative">
-            <button
-              onClick={handleMenuToggle}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 flex justify-end mb-5 right-0 "
-            >
-              X
-            </button>
+            <div className="flex justify-end">
+              <button
+                onClick={handleMenuToggle}
+                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 flex justify-end mb-5 right-0 "
+              >
+                X
+              </button>
+            </div>
             <Link
               to="/horses"
               onClick={handleLinkClick}

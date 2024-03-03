@@ -67,7 +67,7 @@ function HorseFormPage() {
 
   return (
     <div className="flex items-center justify-center flex-col">
-      <div className="max-w-60% mb-10 p-10 w-full rounded-md">
+      <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
         {horsesErrors.map((error, i) => (
           <div className="bg-red-500 p-2 text-white" key={i}>
             {error}
