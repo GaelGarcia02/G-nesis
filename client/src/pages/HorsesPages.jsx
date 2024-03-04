@@ -11,7 +11,7 @@ function HorsesPages() {
   }, []);
 
   return (
-    <div className="">
+    <div>
       <div className="flex justify-center lg:justify-start lg:mx-5">
         <Link
           to="/horses/add"
@@ -20,13 +20,13 @@ function HorsesPages() {
           Agregar
         </Link>
       </div>
-      <div className="flex flex-col">
+      <div className="">
         {horses.length === 0 ? (
           <div>
             <h1>No hay caballitos</h1>
           </div>
         ) : (
-          <div className="grid w-full gap-2 /**/ md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+          <div className="grid w-full gap-2 /**/  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
             {horses.map((horse) => (
               <HorseCard horse={horse} key={horse._id} />
             ))}

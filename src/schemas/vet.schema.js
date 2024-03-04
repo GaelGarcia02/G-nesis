@@ -10,9 +10,6 @@ export const regVetSchema = z.object({
   age: z.string({
     required_error: "La edad es requerida",
   }),
-  gender: z.string({
-    required_error: "El genero es requerido",
-  }),
   email: z
     .string({
       required_error: "El correo electrónico es requerido",
@@ -43,11 +40,6 @@ export const upVetSchema = z.object({
   age: z
     .string({
       required_error: "La edad es requerida",
-    })
-    .optional(),
-  gender: z
-    .string({
-      required_error: "El genero es requerido",
     })
     .optional(),
   email: z

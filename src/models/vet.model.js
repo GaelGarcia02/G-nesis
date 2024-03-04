@@ -16,11 +16,6 @@ const vetSchema = new mongoose.Schema({
     required: true,
   },
 
-  gender: {
-    type: String,
-    required: true,
-  },
-
   email: {
     type: String,
     required: true,

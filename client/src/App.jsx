@@ -10,18 +10,22 @@ import VetsPage from "./pages/VetsPage.jsx";
 import VetsFormPage from "./pages/VetsFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import AboutUsPage from "./pages/AboutUs.jsx";
+import MapPage from "./pages/MapPage.jsx";
 
+import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
 import { HorseProvider } from "./context/HorsesContext.jsx";
-import Navbar from "./components/Navbar.jsx";
+import { VetProvider } from "./context/VetsContext.jsx";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <HorseProvider>
-          <AppContent />
+          <VetProvider>
+            <AppContent />
+          </VetProvider>
         </HorseProvider>
       </BrowserRouter>
     </AuthProvider>
@@ -51,6 +55,7 @@ function AppContent() {
             <Route path="/vets/add" element={<VetsFormPage />} />
             <Route path="/vets/:id" element={<VetsFormPage />} />
 
+            <Route path="/map" element={<MapPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/about" element={<AboutUsPage />} />
           </Route>

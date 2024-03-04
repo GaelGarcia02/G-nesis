@@ -3,7 +3,7 @@ import Vet from "../models/vet.model.js";
 //* Registrar Veterinario
 export const vetRegister = async (req, res) => {
   //Especificas los campos que son requeridos para esta función
-  const { firstName, lastName, age, gender, email, phone } = req.body;
+  const { firstName, lastName, age, email, phone } = req.body;
 
   try {
     //Crea el nuevo veterinario y lo almacena en una variable
@@ -11,7 +11,6 @@ export const vetRegister = async (req, res) => {
       firstName,
       lastName,
       age,
-      gender,
       email,
       phone,
     });
