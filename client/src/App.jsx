@@ -9,7 +9,6 @@ import HorseFormPage from "./pages/HorseFormPage.jsx";
 import VetsPage from "./pages/VetsPage.jsx";
 import VetsFormPage from "./pages/VetsFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import AboutUsPage from "./pages/AboutUs.jsx";
 import MapPage from "./pages/MapPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
@@ -57,7 +56,6 @@ function AppContent() {
 
             <Route path="/map" element={<MapPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/about" element={<AboutUsPage />} />
           </Route>
         )}
       </Routes>
