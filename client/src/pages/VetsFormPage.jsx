@@ -109,7 +109,6 @@ function HorseFormPage() {
               name="lastName"
               placeholder="Apellido"
               autoComplete="lastName"
-              autoFocus
               {...register("lastName", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
             />
@@ -127,7 +126,6 @@ function HorseFormPage() {
               name="age"
               placeholder="Edad"
               autoComplete="age"
-              autoFocus
               {...register("age", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
             />
@@ -145,7 +143,6 @@ function HorseFormPage() {
               name="email"
               placeholder="Correo Electrónico"
               autoComplete="email"
-              autoFocus
               {...register("email", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
             />
@@ -163,7 +160,8 @@ function HorseFormPage() {
               name="phone"
               placeholder="Número de Teléfono"
               autoComplete="phone"
-              autoFocus
+              minLength={10}
+              maxLength={10}
               {...register("phone", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
             />

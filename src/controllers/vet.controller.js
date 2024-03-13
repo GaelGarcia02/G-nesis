@@ -6,6 +6,12 @@ export const vetRegister = async (req, res) => {
   const { firstName, lastName, age, email, phone } = req.body;
 
   try {
+    const emailFound = await Vet.findOne({ email });
+    if (emailFound) return res.status(400).json(["El correo ya está en uso"]);
+
+    const phoneFound = await Vet.findOne({ phone });
+    if (phoneFound) return res.status(400).json(["El teléfono ya está en uso"]);
+
     //Crea el nuevo veterinario y lo almacena en una variable
     const newVet = new Vet({
       firstName,
