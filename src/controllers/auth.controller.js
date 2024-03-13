@@ -59,13 +59,13 @@ export const login = async (req, res) => {
     const userFound = await User.findOne({ email });
     //Si no encuentra un usuario, manda error
     if (!userFound)
-      return res.status(400).json({ message: "Usuario no encontrado" });
+      return res.status(400).json({ message: "Credenciales Incorrectas" });
 
     //Compara la contraseña que se mandó con la contraseña que tiene el usuario encontrado (userFound)
     const isMatch = await bcryptjs.compare(password, userFound.password);
     //Si no coincide, manda el error
     if (!isMatch)
-      return res.status(400).json({ message: "Contraseña Incorrecta" });
+      return res.status(400).json({ message: "Credenciales Incorrectas" });
 
     //Crea el token
     const token = await createAccessToken({ id: userFound._id });

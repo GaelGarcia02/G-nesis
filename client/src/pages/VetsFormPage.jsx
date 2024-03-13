@@ -3,7 +3,7 @@ import { useVets } from "../context/VetsContext";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-function HorseFormPage() {
+function VetFormPage() {
   const {
     register,
     handleSubmit,
@@ -184,4 +184,4 @@ function HorseFormPage() {
   );
 }
 
-export default HorseFormPage;
+export default VetFormPage;
