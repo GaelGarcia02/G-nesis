@@ -16,11 +16,7 @@ function LoginPage() {
     password: "",
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const { signin, errors: signinErrors, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -76,9 +72,6 @@ function LoginPage() {
                 placeholder="example@example.com"
                 id="email"
               />
-              {errors.email && (
-                <p className="text-red-500 mb-2">El email es requerido</p>
-              )}
             </div>
             <div className="mb-4">
               <label className="font-medium" htmlFor="password">
@@ -93,9 +86,6 @@ function LoginPage() {
                 placeholder="**********"
                 id="password"
               />
-              {errors.password && (
-                <p className="text-red-500 mb-2">La contraseña es requerida</p>
-              )}
             </div>
             <div className="flex justify-center">
               <button
@@ -109,17 +99,6 @@ function LoginPage() {
               >
                 ENTRAR
               </button>
-            </div>
-            <p className="flex justify-between mt-4">
-              ¿No tienes cuenta?
-              <Link to="/register" className="text-sky-600">
-                Registrarse
-              </Link>
-            </p>
-            <div className="flex mt-8 justify-between">
-              <FontAwesomeIcon icon={faGoogle} size="2x" />
-              <FontAwesomeIcon icon={faFacebook} size="2x" />
-              <FontAwesomeIcon icon={faGithub} size="2x" />
             </div>
           </form>
         </div>

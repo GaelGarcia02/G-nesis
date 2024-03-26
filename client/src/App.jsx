@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 
-import RegisterPage from "./pages/RegisterPage";
+import RegisterUserPage from "./pages/RegisterUserPage";
+import UsersPage from "./pages/UsersPage";
 import LoginPage from "./pages/LoginPage";
 import HorsesPages from "./pages/HorsesPages.jsx";
 import HorseFormPage from "./pages/HorseFormPage.jsx";
@@ -16,16 +17,19 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 
 import { HorseProvider } from "./context/HorsesContext.jsx";
 import { VetProvider } from "./context/VetsContext.jsx";
+import { UserProvider } from "./context/UsersContext.jsx";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <HorseProvider>
-          <VetProvider>
-            <AppContent />
-          </VetProvider>
-        </HorseProvider>
+        <UserProvider>
+          <HorseProvider>
+            <VetProvider>
+              <AppContent />
+            </VetProvider>
+          </HorseProvider>
+        </UserProvider>
       </BrowserRouter>
     </AuthProvider>
   );
@@ -34,15 +38,13 @@ function App() {
 function AppContent() {
   const location = useLocation();
 
-  const isLoginPage =
-    location.pathname === "/" || location.pathname === "/register";
+  const isLoginPage = location.pathname === "/";
 
   return (
     <>
       {!isLoginPage && <Navbar />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
 
         {!isLoginPage && (
           <Route element={<ProtectedRoute />}>
@@ -53,6 +55,10 @@ function AppContent() {
             <Route path="/vets" element={<VetsPage />} />
             <Route path="/vets/add" element={<VetsFormPage />} />
             <Route path="/vets/:id" element={<VetsFormPage />} />
+
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/users/add" element={<RegisterUserPage />} />
+            <Route path="/users/:id" element={<RegisterUserPage />} />
 
             <Route path="/map" element={<MapPage />} />
             <Route path="/profile" element={<ProfilePage />} />

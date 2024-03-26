@@ -43,6 +43,16 @@ function Navbar() {
             Inicio
           </Link>
         </li>
+        {/*  */}
+        <li>
+          <Link
+            to="/users"
+            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+          >
+            Usuarios
+          </Link>
+        </li>
+        {/*  */}
         <li>
           <Link
             to="/vets"

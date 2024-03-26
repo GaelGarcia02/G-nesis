@@ -12,7 +12,6 @@ export const horseRegister = async (req, res) => {
       age,
       breed,
       diseases,
-      user: req.user.id,
     });
 
     //Método para guardar al nuevo vaballo en la base de datos
@@ -29,7 +28,7 @@ export const horseRegister = async (req, res) => {
 export const showHorses = async (req, res) => {
   try {
     //Busca a los caballos existentes
-    const horses = await Horse.find({ user: req.user.id }).populate("user");
+    const horses = await Horse.find();
     //Muestra a los caballos
     res.status(200).json(horses);
   } catch (error) {

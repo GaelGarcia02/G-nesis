@@ -1,12 +1,18 @@
 import { z } from "zod";
 
-export const loginSchema = z.object({
+export const registerSchema = z.object({
+  username: z.string({
+    required_error: "El nombre de usuario es requerido",
+  }),
+  name: z.string({
+    required_error: "El nombre es requerido",
+  }),
   email: z
     .string({
       required_error: "El email es requerido",
     })
     .email({
-      message: "Email inválido",
+      message: "Email invalido",
     }),
   password: z
     .string({

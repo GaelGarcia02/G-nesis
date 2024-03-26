@@ -6,6 +6,7 @@ import cors from "cors";
 import authRoute from "./routes/auth.routes.js";
 import vetRoute from "./routes/vets.routes.js";
 import horseRoute from "./routes/horses.routes.js";
+import userRoute from "./routes/users.routes.js";
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use(cookieParser());
 app.use("/api", authRoute);
 app.use("/api", vetRoute);
 app.use("/api", horseRoute);
+app.use("/api", userRoute);
 
 export default app;

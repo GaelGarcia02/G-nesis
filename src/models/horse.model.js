@@ -21,11 +21,6 @@ const horseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
 });
 
 export default mongoose.model("Horse", horseSchema);
