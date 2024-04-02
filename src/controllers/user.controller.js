@@ -1,6 +1,5 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import { createAccessToken } from "../libs/jwt.js";
 
 //* Registrar
 export const userRegister = async (req, res) => {
@@ -29,10 +28,6 @@ export const userRegister = async (req, res) => {
 
     //Método para guardar el nuevo usuario en la base de datos
     const userSaved = await newUser.save();
-
-    //Crea el token
-    const token = await createAccessToken({ id: userSaved._id });
-    res.cookie("token", token);
 
     //Respuesta del servidor cuando todo sale bien
     res.json({

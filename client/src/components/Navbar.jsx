@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useContext } from "react";
 import { FiMenu } from "react-icons/fi";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 function Navbar() {
   const { logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { userType } = useContext(AuthContext);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -44,14 +47,17 @@ function Navbar() {
           </Link>
         </li>
         {/*  */}
-        <li>
-          <Link
-            to="/users"
-            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
-          >
-            Usuarios
-          </Link>
-        </li>
+        {userType === "admin" && (
+          <li>
+            <Link
+              to="/users"
+              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            >
+              Usuarios
+            </Link>
+          </li>
+        )}
+
         {/*  */}
         <li>
           <Link

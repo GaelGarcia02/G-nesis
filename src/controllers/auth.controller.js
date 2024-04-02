@@ -23,7 +23,10 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Credenciales Incorrectas" });
 
     //Crea el token
-    const token = await createAccessToken({ id: userFound._id });
+    const token = await createAccessToken({
+      id: userFound._id,
+      typeUser: userFound.typeUser, // Asegúrate de incluir typeUser en el payload
+    });
     res.cookie("token", token);
 
     //Respuesta del servidor si sale todo bien
@@ -31,6 +34,7 @@ export const login = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      typeUser: userFound.typeUser,
       createdAt: userFound.createdAt,
       updatedAt: userFound.updatedAt,
     });
