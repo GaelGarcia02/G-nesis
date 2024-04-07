@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { UserCard } from "../components/UserCard.jsx";
 
 function UsersPage() {
-  const { getUsers } = useUsers();
+  const { getUsers, users } = useUsers();
 
   useEffect(() => {
     getUsers();

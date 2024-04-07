@@ -1,10 +1,9 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import {
-  createUserRequest,
   getUsersRequest,
-  deleteUsersRequest,
   getUserRequest,
-  updateUsersRequest,
+  updateUserRequest,
+  verifyPasswordRequest,
 } from "../api/users";
 
 const UserContext = createContext();
@@ -19,7 +18,6 @@ export const useUsers = () => {
 
 export function UserProvider({ children }) {
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState([]);
   const [errors, setErrors] = useState([]);
   const [userAdd, setUserAdd] = useState(false);
 
@@ -27,30 +25,6 @@ export function UserProvider({ children }) {
     try {
       const res = await getUsersRequest();
       setUsers(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const createUser = async (user) => {
-    try {
-      const res = await createUserRequest(user);
-      console.log(res.data);
-      // Agregar el nuevo usuario a la lista existente
-      setUsers((prevUsers) => [...prevUsers, res.data]);
-      setUserAdd(true);
-    } catch (error) {
-      if (Array.isArray(error.response.data)) {
-        return setErrors(error.response.data);
-      }
-      setErrors([error.response.data.message]);
-    }
-  };
-
-  const deleteUser = async (id) => {
-    try {
-      const res = await deleteUsersRequest(id);
-      if (res.status === 200) setUsers(users.filter((user) => user._id !== id));
     } catch (error) {
       console.log(error);
     }
@@ -65,35 +39,33 @@ export function UserProvider({ children }) {
     }
   };
 
-  const updateUser = async (id, user) => {
+  const updateUser = async (id, userData) => {
     try {
-      await updateUsersRequest(id, user);
+      await updateUserRequest(id, userData);
       setUserAdd(true);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    if (errors.length > 0) {
-      const timer = setTimeout(() => {
-        setErrors([]);
-      }, 5000);
-      return () => clearTimeout(timer);
+  const verifyPassword = async (userId, password) => {
+    try {
+      const res = await verifyPasswordRequest(userId, password);
+      return res.data.isPasswordCorrect;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
-  }, [errors]);
+  };
 
   return (
     <UserContext.Provider
       value={{
-        createUser,
         getUsers,
         getUser,
-        deleteUser,
-        getUser,
         updateUser,
+        verifyPassword,
         users,
-        user,
         errors,
         userAdd,
       }}

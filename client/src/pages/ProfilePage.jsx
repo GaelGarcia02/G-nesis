@@ -5,10 +5,15 @@ import { useForm } from "react-hook-form";
 
 function ProfilePage() {
   const { setValue } = useForm();
-  const { getUser } = useUsers();
+  const { getUser, updateUser, verifyPassword } = useUsers();
   const params = useParams();
   const [user, setUser] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
+  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   useEffect(() => {
     async function loadUser() {
@@ -18,20 +23,72 @@ function ProfilePage() {
         setValue("username", userData.username);
         setValue("name", userData.name);
         setValue("email", userData.email);
-        setValue("password", userData.password);
         setValue("typeUser", userData.typeUser);
-        console.log(userData);
       }
     }
     loadUser();
   }, [params.id]);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openFirstModal = () => {
+    setIsFirstModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeFirstModal = () => {
+    setIsFirstModalOpen(false);
+  };
+
+  const openSecondModal = () => {
+    setIsSecondModalOpen(true);
+  };
+
+  const closeSecondModal = () => {
+    setIsSecondModalOpen(false);
+  };
+
+  const handleFirstModalConfirm = async () => {
+    try {
+      // Verificar la contraseña actual
+      const isPasswordCorrect = await verifyPassword(user._id, currentPassword);
+
+      if (!isPasswordCorrect) {
+        setError("La contraseña actual es incorrecta");
+        return;
+      }
+
+      // Limpiar el error y abrir el segundo modal
+      setError("");
+      openSecondModal();
+    } catch (error) {
+      console.error("Error al verificar la contraseña:", error);
+      setError("Hubo un error al verificar la contraseña");
+    }
+  };
+
+  const handleSecondModalConfirm = async () => {
+    try {
+      // Validar contraseñas
+      if (newPassword !== confirmNewPassword) {
+        setError("Las contraseñas no coinciden");
+        return;
+      }
+
+      // Actualizar la contraseña
+      await updateUser(params.id, { password: newPassword });
+
+      // Limpiar campos y errores
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+      setError("");
+
+      // Cerrar modal
+      closeSecondModal();
+
+      alert("Contraseña actualizada correctamente");
+    } catch (error) {
+      setError("Hubo un error al actualizar la contraseña");
+      console.error("Error al actualizar la contraseña:", error);
+    }
   };
 
   return (
@@ -55,11 +112,11 @@ function ProfilePage() {
         <h1 className="text-xl font-bold">Reestablecer Contraseña</h1>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={openModal}
+          onClick={openFirstModal}
         >
           Cambiar Contraseña
         </button>
-        {isModalOpen && (
+        {isFirstModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center z-10">
             <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             <div className="relative bg-white p-8 rounded-lg">
@@ -68,26 +125,56 @@ function ProfilePage() {
                   type="password"
                   placeholder="Contraseña Actual"
                   className="mb-4 px-8 py-2"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                 />
-                <input
-                  type="password"
-                  placeholder="Nueva Contraseña"
-                  className="mb-4 px-8 py-2"
-                />
-                <input
-                  type="password"
-                  placeholder="Confirmar Nueva Contraseña"
-                  className="mb-4 px-8 py-2"
-                />
+                {error && <p className="text-red-500">{error}</p>}
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
-                  onClick={closeModal}
+                  onClick={handleFirstModalConfirm}
                 >
                   Confirmar
                 </button>
                 <button
                   className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-                  onClick={closeModal}
+                  onClick={closeFirstModal}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isSecondModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-10">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            <div className="relative bg-white p-8 rounded-lg">
+              <div className="flex flex-col">
+                <input
+                  type="password"
+                  placeholder="Nueva Contraseña"
+                  className="mb-4 px-8 py-2"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Confirmar Nueva Contraseña"
+                  className="mb-4 px-8 py-2"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                />
+                {error && <p className="text-red-500">{error}</p>}
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                  onClick={handleSecondModalConfirm}
+                >
+                  Confirmar
+                </button>
+                <button
+                  className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                  onClick={closeSecondModal}
                 >
                   Cancelar
                 </button>

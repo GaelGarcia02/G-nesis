@@ -118,3 +118,29 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+//* Verificar Contraseña
+export const verifyPassword = async (req, res) => {
+  const { userId, password } = req.body;
+
+  try {
+    const userId = req.params.id;
+
+    // Buscar al usuario por su ID
+    const user = await User.findById(userId);
+
+    // Si no encuentra al usuario, enviar un mensaje de error
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    // Verificar si la contraseña proporcionada coincide con la almacenada en la base de datos
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+
+    // Enviar el resultado de la verificación al cliente
+    res.json({ isPasswordCorrect });
+  } catch (error) {
+    // Error si algo sale mal
+    res.status(500).json({ message: error.message });
+  }
+};

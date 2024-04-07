@@ -122,21 +122,6 @@ function UserFormPage() {
           )}
         </div>
         <div className="mb-2">
-          <label className="font-medium" htmlFor="password">
-            Contraseña:
-          </label>
-          <input
-            type="password"
-            {...register("password", { required: true })}
-            className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            placeholder="**************"
-            id="password"
-          />
-          {formErrors.password && (
-            <p className="text-red-500">La contraseña es requerida</p>
-          )}
-        </div>
-        <div className="mb-2">
           <label className="font-medium" htmlFor="typeUser">
             Tipo de Usuario:
           </label>
