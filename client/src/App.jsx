@@ -10,7 +10,6 @@ import HorseFormPage from "./pages/HorseFormPage.jsx";
 import VetsPage from "./pages/VetsPage.jsx";
 import VetsFormPage from "./pages/VetsFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import MapPage from "./pages/MapPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -60,7 +59,6 @@ function AppContent() {
             <Route path="/users/add" element={<RegisterUserPage />} />
             <Route path="/users/:id" element={<RegisterUserPage />} />
 
-            <Route path="/map" element={<MapPage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
         )}
