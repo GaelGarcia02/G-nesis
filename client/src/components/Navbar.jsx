@@ -69,14 +69,6 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/map"
-            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
-          >
-            Mapa
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/profile"
             className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
           >
@@ -117,13 +109,6 @@ function Navbar() {
               className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
             >
               Veterinarios
-            </Link>
-            <Link
-              to="/map"
-              onClick={handleLinkClick}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
-            >
-              Mapa
             </Link>
 
             <Link
