@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState /* useEffect */ } from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+// import { useUsers } from "../context/UsersContext.jsx";
 import { useContext } from "react";
 import { FiMenu } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext.jsx";
 
 function Navbar() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+  // const { user, getUser } = useUsers();
   const [menuOpen, setMenuOpen] = useState(false);
   const { userType } = useContext(AuthContext);
+
+  /* useEffect(() => {
+    getUser();
+  }, []); */
+
+  // console.log(user);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -69,7 +77,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/profile"
+            to={`profile/${user.id}`}
             className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
           >
             Perfil

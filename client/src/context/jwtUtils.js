@@ -17,11 +17,11 @@ export const getTokenFromCookie = () => {
 // Función para decodificar el token y obtener información del usuario
 export const decodeToken = (token) => {
   if (token) {
-    console.log("Token recibido:", token); // Verificar el token recibido
+    // console.log("Token recibido:", token); // Verificar el token recibido
     const decoded = jwtDecode(token);
-    console.log("Token decodificado:", decoded); // Verificar el token decodificado
+    // console.log("Token decodificado:", decoded); // Verificar el token decodificado
     const userType = decoded.typeUser; // Ajusta esto a la propiedad correcta de tu token que contiene el tipo de usuario
-    console.log("Tipo de usuario:", userType); // Verificar el tipo de usuario
+    // console.log("Tipo de usuario:", userType); // Verificar el tipo de usuario
     return userType;
   }
   return null;

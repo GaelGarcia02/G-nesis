@@ -19,6 +19,7 @@ export const useUsers = () => {
 
 export function UserProvider({ children }) {
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState([]);
   const [errors, setErrors] = useState([]);
   const [userAdd, setUserAdd] = useState(false);
 
@@ -87,10 +88,12 @@ export function UserProvider({ children }) {
       value={{
         createUser,
         getUsers,
+        getUser,
         deleteUser,
         getUser,
         updateUser,
         users,
+        user,
         errors,
         userAdd,
       }}

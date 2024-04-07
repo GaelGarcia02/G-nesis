@@ -3,8 +3,8 @@ import { useUsers } from "../context/UsersContext.jsx";
 import { Link } from "react-router-dom";
 import { UserCard } from "../components/UserCard.jsx";
 
-function VetsPages() {
-  const { getUsers, users } = useUsers();
+function UsersPage() {
+  const { getUsers } = useUsers();
 
   useEffect(() => {
     getUsers();
@@ -37,4 +37,4 @@ function VetsPages() {
   );
 }
 
-export default VetsPages;
+export default UsersPage;

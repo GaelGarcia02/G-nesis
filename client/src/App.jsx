@@ -59,7 +59,7 @@ function AppContent() {
             <Route path="/users/add" element={<RegisterUserPage />} />
             <Route path="/users/:id" element={<RegisterUserPage />} />
 
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
           </Route>
         )}
       </Routes>
