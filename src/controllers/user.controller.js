@@ -46,12 +46,12 @@ export const userRegister = async (req, res) => {
 //* Mostrar Usuarios
 export const showUsers = async (req, res) => {
   try {
-    //Busca a los usuarios existentes
-    const users = await User.find();
-    //Muestra a los usuarios
+    // Busca a los usuarios existentes cuyo typeUser sea "common" o "manager"
+    const users = await User.find({ typeUser: { $in: ["common", "manager"] } });
+    // Muestra a los usuarios
     res.status(200).json(users);
   } catch (error) {
-    //Error si algo sale mal
+    // Error si algo sale mal
     res.status(500).json({ message: error.message });
   }
 };

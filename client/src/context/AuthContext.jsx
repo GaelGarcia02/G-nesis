@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginRequest, verifyTokenRequest } from "../api/auth.js";
+import {
+  loginRequest,
+  logoutRequest,
+  verifyTokenRequest,
+} from "../api/auth.js";
 import Cookies from "js-cookie";
-import { decodeToken } from "./jwtUtils";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -20,33 +24,50 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const decodeToken = (token) => {
+    if (token) {
+      const decoded = jwtDecode(token);
+      const userType = decoded.typeUser;
+      return userType;
+    }
+    return null;
+  };
+
   const signin = async (user) => {
     setIsAuthenticated(false);
     try {
       const res = await loginRequest(user);
-      console.log(res.data);
-
-      // Decodificar el token para obtener el tipo de usuario
-      const userType = decodeToken(res.data.token);
-
-      // Actualizar el estado del usuario, la autenticación y el tipo de usuario
+      const decodedUserType = decodeToken(res.data.token);
       setUser(res.data);
-      setUserType(userType);
+      setUserType(decodedUserType);
       setIsAuthenticated(true);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       if (Array.isArray(error.response.data)) {
-        return setErrors(error.response.data);
+        setErrors(error.response.data);
+      } else {
+        setErrors([error.response.data.message]);
       }
-      setErrors([error.response.data.message]);
+      setIsAuthenticated(false);
+      setLoading(false);
     }
   };
 
-  const logout = () => {
-    Cookies.remove("token");
-    setUser(null);
-    setUserType(null);
+  const logout = async () => {
     setIsAuthenticated(false);
+    try {
+      await logoutRequest(); // Suponiendo que tienes una función para hacer una solicitud de logout
+      Cookies.remove("token");
+      setUser(null);
+      setUserType(null);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setErrors(["Error al cerrar sesión"]);
+      setIsAuthenticated(false);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -54,6 +75,7 @@ export const AuthProvider = ({ children }) => {
     if (!token) {
       setIsAuthenticated(false);
       setLoading(false);
+      setUserType(null);
       return;
     }
 
@@ -64,11 +86,13 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       setIsAuthenticated(false);
       setLoading(false);
+      setUserType(null);
     }
-  }, []);
+  }, [isAuthenticated]); // Actualizar cuando isAuthenticated cambie
 
   const verifyToken = async (token) => {
     try {
+      const userType = decodeToken(token);
       const res = await verifyTokenRequest(token);
       if (res.data) {
         setUser({ ...res.data, userType });
@@ -90,39 +114,7 @@ export const AuthProvider = ({ children }) => {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [errors]);
-
-  useEffect(() => {
-    async function checkLogin() {
-      const cookies = Cookies.get();
-
-      if (!cookies.token) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        return setUser(null);
-      }
-
-      if (cookies.token) {
-        try {
-          const res = await verifyTokenRequest(cookies.token);
-          if (!res.data) {
-            setIsAuthenticated(false);
-            setLoading(false);
-            return;
-          }
-
-          setIsAuthenticated(true);
-          setUser(res.data);
-          setLoading(false);
-        } catch (error) {
-          setIsAuthenticated(false);
-          setUser(null);
-          setLoading(false);
-        }
-      }
-    }
-    checkLogin();
-  }, []);
+  }, [errors]); // Actualizar cuando errors cambie
 
   return (
     <AuthContext.Provider
