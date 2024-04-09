@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -20,11 +21,20 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
+    default: "123456789",
+    // Función para encriptar la contraseña antes de guardarla
+    set: function (password) {
+      const saltRounds = 10; // Número de rondas de hashing
+      return bcrypt.hashSync(password, saltRounds);
+    },
   },
   typeUser: {
     type: String,
     required: true,
+  },
+  passwordChange: {
+    type: Boolean,
+    default: false,
   },
 });
 

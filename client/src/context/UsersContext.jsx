@@ -3,6 +3,8 @@ import {
   getUsersRequest,
   getUserRequest,
   updateUserRequest,
+  createUserRequest,
+  deleteUsersRequest,
   verifyPasswordRequest,
 } from "../api/users";
 
@@ -48,6 +50,33 @@ export function UserProvider({ children }) {
     }
   };
 
+  const createUser = async (userData) => {
+    try {
+      const res = await createUserRequest(userData);
+      // Agregar el nuevo usuario a la lista existente
+      setUsers((prevUsers) => [...prevUsers, res.data]);
+      setUserAdd(true);
+    } catch (error) {
+      console.log(error.response);
+      setErrors(
+        Array.isArray(error.response.data)
+          ? error.response.data
+          : [error.response.data]
+      );
+    }
+  };
+
+  const deleteUser = async (id) => {
+    try {
+      const res = await deleteUsersRequest(id);
+      if (res.status === 200) {
+        setUsers(users.filter((user) => user._id !== id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const verifyPassword = async (userId, password) => {
     try {
       const res = await verifyPasswordRequest(userId, password);
@@ -64,7 +93,10 @@ export function UserProvider({ children }) {
         getUsers,
         getUser,
         updateUser,
+        createUser,
+        deleteUser,
         verifyPassword,
+        setErrors,
         users,
         errors,
         userAdd,

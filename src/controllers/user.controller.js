@@ -4,7 +4,7 @@ import bcryptjs from "bcryptjs";
 //* Registrar
 export const userRegister = async (req, res) => {
   //Especificas los campos que son requeridos para esta función
-  const { username, name, email, password, typeUser } = req.body;
+  const { username, name, email, typeUser } = req.body;
 
   try {
     const emailFound = await User.findOne({ email });
@@ -14,15 +14,11 @@ export const userRegister = async (req, res) => {
     if (usernameFound)
       return res.status(400).json(["El nombre de usuario ya está en uso"]);
 
-    //Encripta la contraseña
-    const passwordHash = await bcryptjs.hash(password, 10);
-
     //Crea el nuevo usuario y lo almacena en una variable
     const newUser = new User({
       username,
       name,
       email,
-      password: passwordHash, //? Se agrega la contraseña encriptada para que se suba así a la base de datos
       typeUser,
     });
 

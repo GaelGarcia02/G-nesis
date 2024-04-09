@@ -1,30 +1,47 @@
+import React from "react";
 import { useUsers } from "../context/UsersContext.jsx";
-import { Card } from "./ui/Card.jsx";
 import { Link } from "react-router-dom";
 
 export function UserCard({ user }) {
   const { deleteUser } = useUsers();
   return (
-    <Card>
-      <header>
-        <h1 className="text-xl font-bold my-3">{user.username}</h1>
-        <h1 className="text-xl font-bold my-3">{user.name}</h1>
-      </header>
-
-      <p className="mb-1">{user.email}</p>
-      <p className="mb-1">{user.typeUser}</p>
-
-      <footer className="flex gap-x-10 justify-center items-center mt-10">
-        <Link to={`/users/${user._id}`}>Editar</Link>
-        <button
-          onClick={() => {
-            deleteUser(user._id);
-          }}
-        >
-          Eliminar
-        </button>
-      </footer>
-      <hr className="my-5" />
-    </Card>
+    <table className="table-auto w-full border-collapse border border-gray-300">
+      <tbody>
+        <tr>
+          <th className="border border-gray-300 px-4 py-2">Username</th>
+          <td className="border border-gray-300 px-4 py-2">{user.username}</td>
+        </tr>
+        <tr>
+          <th className="border border-gray-300 px-4 py-2">Nombre</th>
+          <td className="border border-gray-300 px-4 py-2">{user.name}</td>
+        </tr>
+        <tr>
+          <th className="border border-gray-300 px-4 py-2">Email</th>
+          <td className="border border-gray-300 px-4 py-2">{user.email}</td>
+        </tr>
+        <tr>
+          <th className="border border-gray-300 px-4 py-2">Tipo de Usuario</th>
+          <td className="border border-gray-300 px-4 py-2">{user.typeUser}</td>
+        </tr>
+        <tr>
+          <td className="border border-gray-300 px-4 py-2" colSpan="2">
+            <Link
+              to={`/users/${user._id}`}
+              className="text-blue-500 hover:text-blue-700 mr-2"
+            >
+              Editar
+            </Link>
+            <button
+              onClick={() => {
+                deleteUser(user._id);
+              }}
+              className="text-red-500 hover:text-red-700"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 }

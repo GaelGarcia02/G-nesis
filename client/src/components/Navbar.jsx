@@ -5,8 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { FiMenu } from "react-icons/fi";
 
 function Navbar() {
-  const { user, logout, userType } = useAuth();
-
+  const { user, logout, isAuthenticated, userType } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -45,16 +44,17 @@ function Navbar() {
           </Link>
         </li>
         {/*  */}
-        {userType === "admin" && (
-          <li>
-            <Link
-              to="/users"
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
-            >
-              Usuarios
-            </Link>
-          </li>
-        )}
+        {isAuthenticated &&
+          (userType === "admin" || userType === "superadmin") && (
+            <li>
+              <Link
+                to="/users"
+                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+              >
+                Usuarios
+              </Link>
+            </li>
+          )}
 
         {/*  */}
         <li>

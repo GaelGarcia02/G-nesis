@@ -20,7 +20,8 @@ export const registerSchema = z.object({
     })
     .min(6, {
       message: "La contraseña debe tener como mínimo 6 caracteres",
-    }),
+    })
+    .optional(),
 });
 
 export const updateSchema = z.object({
