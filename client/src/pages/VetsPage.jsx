@@ -13,6 +13,7 @@ function VetsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-4">Veterinarios</h1>
       <div className="flex justify-center">
         {isAuthenticated &&
           (userType === "admin" || userType === "superadmin") && (
@@ -38,7 +39,12 @@ function VetsPage() {
                 <th className="border border-gray-300 px-4 py-2">Edad</th>
                 <th className="border border-gray-300 px-4 py-2">Email</th>
                 <th className="border border-gray-300 px-4 py-2">Teléfono</th>
-                <th className="border border-gray-300 px-4 py-2">Acciones</th>
+                {isAuthenticated &&
+                  (userType === "admin" || userType === "superadmin") && (
+                    <th className="border border-gray-300 px-4 py-2">
+                      Acciones
+                    </th>
+                  )}
               </tr>
             </thead>
             <tbody>
@@ -59,22 +65,27 @@ function VetsPage() {
                   <td className="border border-gray-300 px-4 py-2">
                     {vet.phone}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    <Link
-                      to={`/vets/${vet._id}`}
-                      className="text-blue-500 hover:text-blue-700 mr-2"
-                    >
-                      Editar
-                    </Link>
-                    <button
-                      onClick={() => {
-                        deleteVet(vet._id);
-                      }}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Eliminar
-                    </button>
-                  </td>
+                  {isAuthenticated &&
+                    (userType === "admin" || userType === "superadmin") && (
+                      <td className="border border-gray-300 px-4 py-2">
+                        <div className="flex justify-center gap-10">
+                          <Link
+                            to={`/vets/${vet._id}`}
+                            className="text-blue-500 hover:text-blue-700 mr-2"
+                          >
+                            Editar
+                          </Link>
+                          <button
+                            onClick={() => {
+                              deleteVet(vet._id);
+                            }}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </td>
+                    )}
                 </tr>
               ))}
             </tbody>

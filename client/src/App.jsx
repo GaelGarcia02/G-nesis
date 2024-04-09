@@ -10,6 +10,7 @@ import HorseFormPage from "./pages/HorseFormPage.jsx";
 import VetsPage from "./pages/VetsPage.jsx";
 import VetsFormPage from "./pages/VetsFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import VerificationPage from "./pages/VerificationPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -38,10 +39,11 @@ function AppContent() {
   const location = useLocation();
 
   const isLoginPage = location.pathname === "/";
+  const isVerificationPage = location.pathname === "/verification";
 
   return (
     <>
-      {!isLoginPage && <Navbar />}
+      {!isLoginPage && !isVerificationPage && <Navbar />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
 
@@ -60,6 +62,7 @@ function AppContent() {
             <Route path="/users/:id" element={<RegisterUserPage />} />
 
             <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/verification" element={<VerificationPage />} />
           </Route>
         )}
       </Routes>

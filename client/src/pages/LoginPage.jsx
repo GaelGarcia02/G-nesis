@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext.jsx";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGoogle,
-  faFacebook,
-  faGithub,
-} from "@fortawesome/free-brands-svg-icons";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 
 function LoginPage() {

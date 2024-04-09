@@ -11,6 +11,7 @@ function UsersPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-4">Usuarios</h1>
       <div className="flex justify-center">
         <Link
           to="/users/add"
@@ -52,21 +53,23 @@ function UsersPage() {
                   <td className="border border-gray-300 px-4 py-2">
                     {user.typeUser}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    <Link
-                      to={`/users/${user._id}`}
-                      className="text-blue-500 hover:text-blue-700 mr-2"
-                    >
-                      Editar
-                    </Link>
-                    <button
-                      onClick={() => {
-                        deleteUser(user._id);
-                      }}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Eliminar
-                    </button>
+                  <td className="border border-gray-300 py-2">
+                    <div className="flex justify-center gap-10">
+                      <Link
+                        to={`/users/${user._id}`}
+                        className="text-blue-500 hover:text-blue-700 mr-2"
+                      >
+                        Editar
+                      </Link>
+                      <button
+                        onClick={() => {
+                          deleteUser(user._id);
+                        }}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

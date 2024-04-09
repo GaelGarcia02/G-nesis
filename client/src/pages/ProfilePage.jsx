@@ -93,6 +93,7 @@ function ProfilePage() {
 
   return (
     <div className="mt-10 flex flex-col items-center">
+      <h1 className="text-3xl font-bold text-center mb-10">Mi Perfil</h1>
       <div className="flex flex-col mb-8">
         <h1 className="text-xl font-bold">Nombre de Usuario:</h1>
         <p className="text-lg font-normal">{user && user.username}</p>

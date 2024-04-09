@@ -70,6 +70,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isPasswordChangeRequired = () => {
+    return user?.passwordChange === false; // Si es false, significa que se debe cambiar la contraseña
+  };
+
   useEffect(() => {
     const token = Cookies.get("token");
     if (!token) {
@@ -121,6 +125,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         signin,
         logout,
+        isPasswordChangeRequired,
         user,
         isAuthenticated,
         errors,

@@ -1,16 +1,26 @@
-import { useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import HorseModal from "../components/HorseModal.jsx";
+import HorseCard from "../components/HorseCard.jsx";
 import { useHorses } from "../context/HorsesContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
-import { HorseCard } from "../components/HorseCard.jsx";
-import { useAuth } from "../context/AuthContext";
 
 function HorsesPages() {
   const { getHorses, horses } = useHorses();
   const { isAuthenticated, userType } = useAuth();
+  const [selectedHorse, setSelectedHorse] = useState(null);
 
   useEffect(() => {
     getHorses();
   }, []);
+
+  const handleOpenModal = (horse) => {
+    setSelectedHorse(horse);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedHorse(null);
+  };
 
   return (
     <div>
@@ -34,11 +44,22 @@ function HorsesPages() {
         ) : (
           <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-4">
             {horses.map((horse) => (
-              <HorseCard horse={horse} key={horse._id} />
+              <HorseCard
+                horse={horse}
+                key={horse._id}
+                onOpenModal={handleOpenModal}
+              />
             ))}
           </div>
         )}
       </div>
+
+      {/* Renderizar el modal */}
+      <HorseModal
+        isOpen={selectedHorse !== null}
+        onClose={handleCloseModal}
+        horse={selectedHorse}
+      />
     </div>
   );
 }
