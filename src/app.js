@@ -7,6 +7,7 @@ import authRoute from "./routes/auth.routes.js";
 import vetRoute from "./routes/vets.routes.js";
 import horseRoute from "./routes/horses.routes.js";
 import userRoute from "./routes/users.routes.js";
+import reportRoute from "./routes/report.routes.js";
 
 const app = express();
 
@@ -24,5 +25,6 @@ app.use("/api", authRoute);
 app.use("/api", vetRoute);
 app.use("/api", horseRoute);
 app.use("/api", userRoute);
+app.use("/api", reportRoute);
 
 export default app;

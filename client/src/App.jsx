@@ -11,6 +11,8 @@ import VetsPage from "./pages/VetsPage.jsx";
 import VetsFormPage from "./pages/VetsFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import VerificationPage from "./pages/VerificationPage.jsx";
+import ReportsFormPage from "./pages/ReportsFormPage.jsx";
+import ReportsPage from "./pages/ReportsPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -18,6 +20,7 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import { HorseProvider } from "./context/HorsesContext.jsx";
 import { VetProvider } from "./context/VetsContext.jsx";
 import { UserProvider } from "./context/UsersContext.jsx";
+import { ReportProvider } from "./context/ReportsContext.jsx";
 
 function App() {
   return (
@@ -26,7 +29,9 @@ function App() {
         <UserProvider>
           <HorseProvider>
             <VetProvider>
-              <AppContent />
+              <ReportProvider>
+                <AppContent />
+              </ReportProvider>
             </VetProvider>
           </HorseProvider>
         </UserProvider>
@@ -60,6 +65,10 @@ function AppContent() {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/users/add" element={<RegisterUserPage />} />
             <Route path="/users/:id" element={<RegisterUserPage />} />
+
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/reports/add" element={<ReportsFormPage />} />
+            <Route path="/reports/:id" element={<ReportsFormPage />} />
 
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/verification" element={<VerificationPage />} />

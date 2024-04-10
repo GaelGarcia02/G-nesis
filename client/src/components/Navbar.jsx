@@ -44,19 +44,17 @@ function Navbar() {
           </Link>
         </li>
         {/*  */}
-        {isAuthenticated &&
-          (userType === "admin" || userType === "superadmin") && (
-            <li>
-              <Link
-                to="/users"
-                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
-              >
-                Usuarios
-              </Link>
-            </li>
-          )}
+        {isAuthenticated && userType !== "common" && (
+          <li>
+            <Link
+              to="/users"
+              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            >
+              Usuarios
+            </Link>
+          </li>
+        )}
 
-        {/*  */}
         <li>
           <Link
             to="/vets"
@@ -65,6 +63,29 @@ function Navbar() {
             Veterinarios
           </Link>
         </li>
+
+        {/*  */}
+        {isAuthenticated && userType === "admin" && (
+          <li>
+            <Link
+              to="/reports"
+              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            >
+              Reportes
+            </Link>
+          </li>
+        )}
+        {isAuthenticated && userType === "manager" && (
+          <li>
+            <Link
+              to="/reports/add"
+              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            >
+              Agregar Reporte
+            </Link>
+          </li>
+        )}
+
         <li>
           <Link
             to={user ? `profile/${user.id}` : "/"}
@@ -117,6 +138,24 @@ function Navbar() {
             >
               Veterinarios
             </Link>
+            {isAuthenticated && userType === "manager" && (
+              <Link
+                to="/reports/add"
+                onClick={handleLinkClick}
+                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              >
+                Agregar Reporte
+              </Link>
+            )}
+            {isAuthenticated && userType === "admin" && (
+              <Link
+                to="/reports"
+                onClick={handleLinkClick}
+                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              >
+                Reportes
+              </Link>
+            )}
 
             <Link
               to={user ? `profile/${user.id}` : "/"}
