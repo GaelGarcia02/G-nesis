@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setIsAuthenticated(false);
     try {
-      await logoutRequest(); // Suponiendo que tienes una función para hacer una solicitud de logout
+      await logoutRequest();
       Cookies.remove("token");
       setUser(null);
       setUserType(null);
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isPasswordChangeRequired = () => {
-    return user?.passwordChange === false; // Si es false, significa que se debe cambiar la contraseña
+    return user?.passwordChange === false;
   };
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       setUserType(null);
     }
-  }, [isAuthenticated]); // Actualizar cuando isAuthenticated cambie
+  }, [isAuthenticated]);
 
   const verifyToken = async (token) => {
     try {
@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }) => {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [errors]); // Actualizar cuando errors cambie
+  }, [errors]);
 
   return (
     <AuthContext.Provider

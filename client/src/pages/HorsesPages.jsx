@@ -25,15 +25,14 @@ function HorsesPages() {
   return (
     <div>
       <div className="flex justify-center lg:justify-start lg:mx-5">
-        {isAuthenticated &&
-          (userType === "admin" || userType === "superadmin") && (
-            <Link
-              to="/horses/add"
-              className="mt-4 w-max bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white text-center"
-            >
-              Agregar
-            </Link>
-          )}
+        {isAuthenticated && userType !== "common" && (
+          <Link
+            to="/horses/add"
+            className="mt-4 w-max bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white text-center"
+          >
+            Agregar
+          </Link>
+        )}
       </div>
 
       <div className="">

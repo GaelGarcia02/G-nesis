@@ -30,9 +30,9 @@ function Navbar() {
           <FiMenu className="text-3xl" />
         </button>
       </div>
-      <div>
+      <Link to="/horses">
         <img src={logo} alt="Logo" className="w-10 lg:mr-auto lg:ml-0" />
-      </div>
+      </Link>
 
       <ul className="hidden lg:flex lg:gap-3 lg:mx-5">
         <li>
@@ -118,7 +118,7 @@ function Navbar() {
             </Link>
 
             <Link
-              to="/profile"
+              to={user ? `profile/${user.id}` : "/"}
               onClick={handleLinkClick}
               className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
             >
