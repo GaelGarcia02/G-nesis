@@ -109,10 +109,10 @@ function ProfilePage() {
         <p className="text-lg font-normal">{user && user.email}</p>
       </div>
 
-      <div className="flex flex-col mb-8">
-        <h1 className="text-xl font-bold">Reestablecer Contraseña</h1>
+      <div className="flex flex-col my-8">
+        <h1 className="text-xl font-bold">Cambio de Contraseña:</h1>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded"
           onClick={openFirstModal}
         >
           Cambiar Contraseña

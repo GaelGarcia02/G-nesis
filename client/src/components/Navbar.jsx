@@ -104,6 +104,7 @@ function Navbar() {
             {user && userType === "admin" && (
               <Link
                 to="/users"
+                onClick={handleLinkClick}
                 className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
               >
                 Usuarios
