@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useUsers } from "../context/UsersContext.jsx";
 import { Link } from "react-router-dom";
+import { handleDelete } from "../utils/sweetAlerts.js";
 
 function UsersPage() {
   const { getUsers, users, deleteUser } = useUsers();
@@ -40,8 +41,8 @@ function UsersPage() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user._id} className="hover:bg-gray-100">
+                {users.map((user, index) => (
+                  <tr key={user._id || index} className="hover:bg-gray-100">
                     <td className="border border-gray-300 px-4 py-2">
                       {user.username}
                     </td>
@@ -64,7 +65,7 @@ function UsersPage() {
                         </Link>
                         <button
                           onClick={() => {
-                            deleteUser(user._id);
+                            handleDelete(user._id, deleteUser, "usuario");
                           }}
                           className="text-red-500 hover:text-red-700"
                         >

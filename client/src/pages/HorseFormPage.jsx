@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useHorses } from "../context/HorsesContext";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { handleSuccess, handleError } from "../utils/sweetAlerts";
 
 function HorseFormPage() {
   const {
@@ -40,9 +41,11 @@ function HorseFormPage() {
       if (params.id) {
         updateHorse(params.id, data);
         setResetForm(true);
+        handleSuccess("Actualizado con exito");
       } else {
         await createHorse(data);
         setResetForm(true);
+        handleSuccess("Registrado con exito");
       }
     } catch (error) {
       console.error(error);
@@ -51,6 +54,7 @@ function HorseFormPage() {
 
   useEffect(() => {
     if (resetForm && horseAdd) {
+      handleSuccess("Registrado con exito");
       const timer = setTimeout(() => {
         setResetForm(false);
       }, 1000);
@@ -65,15 +69,16 @@ function HorseFormPage() {
     }
   }, [resetForm, horseAdd, navigate]);
 
+  useEffect(() => {
+    if (horsesErrors && horsesErrors.length > 0) {
+      const errorMessage = horsesErrors[0];
+      handleError(`${errorMessage}`);
+    }
+  }, [horsesErrors]);
+
   return (
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
-        {horsesErrors.map((error, i) => (
-          <div className="bg-red-500 p-2 text-white" key={i}>
-            {error}
-          </div>
-        ))}
-
         <form onSubmit={onSubmit}>
           <h1 className="text-2xl font-bold mb-4 text-center">
             Agregar Caballo

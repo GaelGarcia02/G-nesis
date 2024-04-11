@@ -1,18 +1,48 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import React, { useEffect, useState } from "react";
+import { useUsers } from "../context/UsersContext";
+import { useParams, useNavigate } from "react-router-dom";
+import Modal from "../components/ModalPassword.jsx";
 
-const VerificationPage = () => {
+function VerificationPage() {
+  const { getUser } = useUsers();
+  const { id } = useParams();
+  const [changePassword, setChangePassword] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const { isPasswordChangeRequired } = useAuth();
 
   useEffect(() => {
-    // Verificar si se requiere cambiar la contraseña
-    if (!isPasswordChangeRequired()) {
-      // Redirigir al usuario a la página de caballos si no es necesario cambiar la contraseña
-      navigate("/horses");
+    let isMounted = true;
+
+    async function loadChangePassword() {
+      const user = await getUser(id);
+      const changePassword = user.passwordChange;
+
+      if (isMounted) {
+        setChangePassword(changePassword);
+
+        if (!changePassword) {
+          setShowModal(true);
+        } else {
+          navigate("/horses");
+        }
+      }
     }
-  }, []);
-};
+
+    loadChangePassword();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, getUser, navigate]);
+
+  return (
+    <div>
+      <div>VerificationPage</div>
+      {showModal && !changePassword && (
+        <Modal /*  closeModal={closeModal}  */ />
+      )}
+    </div>
+  );
+}
 
 export default VerificationPage;

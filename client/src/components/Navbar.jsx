@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FiMenu } from "react-icons/fi";
+import { confirmLogout } from "../utils/sweetAlerts";
 
 function Navbar() {
   const { user, logout, isAuthenticated, userType } = useAuth();
@@ -44,16 +45,17 @@ function Navbar() {
           </Link>
         </li>
         {/*  */}
-        {isAuthenticated && userType !== "common" && (
-          <li>
-            <Link
-              to="/users"
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
-            >
-              Usuarios
-            </Link>
-          </li>
-        )}
+        {isAuthenticated &&
+          (userType === "admin" || userType === "superadmin") && (
+            <li>
+              <Link
+                to="/users"
+                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+              >
+                Usuarios
+              </Link>
+            </li>
+          )}
 
         <li>
           <Link
@@ -97,8 +99,7 @@ function Navbar() {
       </ul>
 
       <Link
-        to="/"
-        onClick={() => logout()}
+        onClick={() => confirmLogout(logout)}
         className="hidden lg:block hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3 ml-auto"
       >
         Cerrar Sesión

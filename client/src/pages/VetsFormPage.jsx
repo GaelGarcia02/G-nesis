@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useVets } from "../context/VetsContext";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { handleSuccess, handleError } from "../utils/sweetAlerts";
 
 function VetFormPage() {
   const {
@@ -53,6 +54,7 @@ function VetFormPage() {
 
   useEffect(() => {
     if (resetForm && vetAdd) {
+      handleSuccess("Registrado con exito");
       const timer = setTimeout(() => {
         setResetForm(false);
       }, 1000);
@@ -67,15 +69,16 @@ function VetFormPage() {
     }
   }, [resetForm, vetAdd, navigate]);
 
+  useEffect(() => {
+    if (vetsErrors && vetsErrors.length > 0) {
+      const errorMessage = vetsErrors[0];
+      handleError(`${errorMessage}`);
+    }
+  }, [vetsErrors]);
+
   return (
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
-        {vetsErrors.map((error, i) => (
-          <div className="bg-red-500 p-2 text-white" key={i}>
-            {error}
-          </div>
-        ))}
-
         <form onSubmit={onSubmit}>
           <h1 className="text-2xl font-bold mb-4 text-center">
             Agregar Veterinario

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useUsers } from "../context/UsersContext";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { handleSuccess, handleError } from "../utils/sweetAlerts";
 
 function UserFormPage() {
   const {
@@ -51,6 +52,7 @@ function UserFormPage() {
 
   useEffect(() => {
     if (resetForm && userAdd) {
+      handleSuccess("Usuario registrado correctamente");
       const timer = setTimeout(() => {
         setResetForm(false);
       }, 1000);
@@ -65,15 +67,15 @@ function UserFormPage() {
     }
   }, [resetForm, userAdd, navigate]);
 
+  useEffect(() => {
+    if (usersErrors && usersErrors.length > 0) {
+      const errorMessage = usersErrors[0]; // Obtener el primer elemento del array
+      handleError(`${errorMessage}`);
+    }
+  }, [usersErrors]);
+
   return (
     <div className="bg-white w-full p-10 rounded-lg mb-10 /**/ h-auto lg:mb-0 sm:max-w-85% xl:max-w-70%">
-      {Array.isArray(usersErrors) &&
-        usersErrors.map((error, i) => (
-          <div className="bg-red-500 p-2 mb-4 text-white text-center" key={i}>
-            {error.message}
-          </div>
-        ))}
-
       <h1 className="text-2xl lg:mb-6 mb-4 text-center font-extrabold">
         Registro
       </h1>

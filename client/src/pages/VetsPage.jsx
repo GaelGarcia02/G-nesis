@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useVets } from "../context/VetsContext.jsx";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { handleDelete } from "../utils/sweetAlerts.js";
 
 function VetsPage() {
-  const { getVets, deleteVet, vets } = useVets();
+  const { getVets, vets, deleteVet } = useVets();
   const { isAuthenticated, userType } = useAuth();
 
   useEffect(() => {
@@ -48,8 +49,8 @@ function VetsPage() {
                 </tr>
               </thead>
               <tbody>
-                {vets.map((vet) => (
-                  <tr key={vet._id} className="hover:bg-gray-100">
+                {vets.map((vet, index) => (
+                  <tr key={vet._id || index} className="hover:bg-gray-100">
                     <td className="border border-gray-300 px-4 py-2">
                       {vet.firstName}
                     </td>
@@ -57,7 +58,7 @@ function VetsPage() {
                       {vet.lastName}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {vet.age}
+                      {vet.age} años
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
                       {vet.email}
@@ -76,9 +77,9 @@ function VetsPage() {
                               Editar
                             </Link>
                             <button
-                              onClick={() => {
-                                deleteVet(vet._id);
-                              }}
+                              onClick={() =>
+                                handleDelete(vet._id, deleteVet, "veterinario")
+                              }
                               className="text-red-500 hover:text-red-700"
                             >
                               Eliminar

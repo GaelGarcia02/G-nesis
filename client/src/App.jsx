@@ -10,6 +10,7 @@ import HorseFormPage from "./pages/HorseFormPage.jsx";
 import VetsPage from "./pages/VetsPage.jsx";
 import VetsFormPage from "./pages/VetsFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import RedirectPage from "./pages/RedirectPage.jsx";
 import VerificationPage from "./pages/VerificationPage.jsx";
 import ReportsFormPage from "./pages/ReportsFormPage.jsx";
 import ReportsPage from "./pages/ReportsPage.jsx";
@@ -44,7 +45,7 @@ function AppContent() {
   const location = useLocation();
 
   const isLoginPage = location.pathname === "/";
-  const isVerificationPage = location.pathname === "/verification";
+  const isVerificationPage = location.pathname.startsWith("/verification/");
 
   return (
     <>
@@ -71,7 +72,8 @@ function AppContent() {
             <Route path="/reports/:id" element={<ReportsFormPage />} />
 
             <Route path="/profile/:id" element={<ProfilePage />} />
-            <Route path="/verification" element={<VerificationPage />} />
+            <Route path="/verification" element={<RedirectPage />} />
+            <Route path="/verification/:id" element={<VerificationPage />} />
           </Route>
         )}
       </Routes>

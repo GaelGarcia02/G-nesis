@@ -57,6 +57,7 @@ export function UserProvider({ children }) {
       // Agregar el nuevo usuario a la lista existente
       setUsers((prevUsers) => [...prevUsers, res.data]);
       setUserAdd(true);
+      setErrors([]);
     } catch (error) {
       console.log(error.response);
       setErrors(

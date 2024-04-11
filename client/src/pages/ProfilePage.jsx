@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useUsers } from "../context/UsersContext";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { handleSuccess } from "../utils/sweetAlerts";
 
 function ProfilePage() {
   const { setValue } = useForm();
@@ -83,8 +84,7 @@ function ProfilePage() {
 
       // Cerrar modal
       closeSecondModal();
-
-      alert("Contraseña actualizada correctamente");
+      handleSuccess("Contraseña actualizada correctamente");
     } catch (error) {
       setError("Hubo un error al actualizar la contraseña");
       console.error("Error al actualizar la contraseña:", error);

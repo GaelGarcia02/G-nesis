@@ -2,6 +2,7 @@ import React from "react";
 import { useHorses } from "../context/HorsesContext.jsx";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { handleDelete } from "../utils/sweetAlerts.js";
 
 const HorseModal = ({ isOpen, onClose, horse }) => {
   const { deleteHorse } = useHorses();
@@ -35,7 +36,7 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
           <h2 className="text-xl text-center font-bold mb-4">{horse.name}</h2>
         </header>
         <div>
-          <p>Edad: {horse.age}</p>
+          <p>Edad: {horse.age} años</p>
           <p>Raza: {horse.breed}</p>
           <p>Enfermedades: {horse.diseases}</p>
         </div>
@@ -51,7 +52,7 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                 onClick={() => {
-                  deleteHorse(horse._id);
+                  handleDelete(horse._id, deleteHorse, "caballo");
                   onClose();
                 }}
               >
