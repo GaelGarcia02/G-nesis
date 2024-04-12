@@ -34,16 +34,23 @@ function ProfilePage() {
     setIsFirstModalOpen(true);
   };
 
-  const closeFirstModal = () => {
-    setIsFirstModalOpen(false);
-  };
-
   const openSecondModal = () => {
     setIsSecondModalOpen(true);
   };
 
+  const closeFirstModal = () => {
+    setCurrentPassword("");
+    setError("");
+    setIsFirstModalOpen(false);
+  };
+
   const closeSecondModal = () => {
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
+    setError("");
     setIsSecondModalOpen(false);
+    setIsFirstModalOpen(false);
   };
 
   const handleFirstModalConfirm = async () => {
@@ -92,97 +99,99 @@ function ProfilePage() {
   };
 
   return (
-    <div className="mt-10 flex flex-col items-center">
-      <h1 className="text-3xl font-bold text-center mb-10">Mi Perfil</h1>
-      <div className="flex flex-col mb-8">
-        <h1 className="text-xl font-bold">Nombre de Usuario:</h1>
-        <p className="text-lg font-normal">{user && user.username}</p>
-      </div>
+    <div className="mt-10 flex justify-center ">
+      <div className="flex flex-col">
+        <h1 className="text-3xl font-bold text-center mb-10">Mi Perfil</h1>
+        <div className="flex flex-col mb-8">
+          <h1 className="text-xl font-bold">Nombre de Usuario:</h1>
+          <p className="text-lg font-normal">{user && user.username}</p>
+        </div>
 
-      <div className="flex flex-col mb-8">
-        <h1 className="text-xl font-bold">Nombre completo:</h1>
-        <p className="text-lg font-normal">{user && user.name}</p>
-      </div>
+        <div className="flex flex-col mb-8">
+          <h1 className="text-xl font-bold">Nombre completo:</h1>
+          <p className="text-lg font-normal">{user && user.name}</p>
+        </div>
 
-      <div className="flex flex-col mb-8">
-        <h1 className="text-xl font-bold">Email:</h1>
-        <p className="text-lg font-normal">{user && user.email}</p>
-      </div>
+        <div className="flex flex-col mb-8">
+          <h1 className="text-xl font-bold">Email:</h1>
+          <p className="text-lg font-normal">{user && user.email}</p>
+        </div>
 
-      <div className="flex flex-col my-8">
-        <h1 className="text-xl font-bold">Cambio de Contraseña:</h1>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded"
-          onClick={openFirstModal}
-        >
-          Cambiar Contraseña
-        </button>
-        {isFirstModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center z-10">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            <div className="relative bg-white p-8 rounded-lg">
-              <div className="flex flex-col">
-                <input
-                  type="password"
-                  placeholder="Contraseña Actual"
-                  className="mb-4 px-8 py-2"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                />
-                {error && <p className="text-red-500">{error}</p>}
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
-                  onClick={handleFirstModalConfirm}
-                >
-                  Confirmar
-                </button>
-                <button
-                  className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-                  onClick={closeFirstModal}
-                >
-                  Cancelar
-                </button>
+        <div className="flex flex-col my-8">
+          <h1 className="text-xl font-bold">Cambio de Contraseña:</h1>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded"
+            onClick={openFirstModal}
+          >
+            Cambiar Contraseña
+          </button>
+          {isFirstModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center z-10">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              <div className="relative bg-white p-8 rounded-lg">
+                <div className="flex flex-col">
+                  <input
+                    type="password"
+                    placeholder="Contraseña Actual"
+                    className="mb-4 px-8 py-2"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
+                  {error && <p className="text-red-500">{error}</p>}
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                    onClick={handleFirstModalConfirm}
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    onClick={closeFirstModal}
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {isSecondModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center z-10">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            <div className="relative bg-white p-8 rounded-lg">
-              <div className="flex flex-col">
-                <input
-                  type="password"
-                  placeholder="Nueva Contraseña"
-                  className="mb-4 px-8 py-2"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <input
-                  type="password"
-                  placeholder="Confirmar Nueva Contraseña"
-                  className="mb-4 px-8 py-2"
-                  value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                />
-                {error && <p className="text-red-500">{error}</p>}
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
-                  onClick={handleSecondModalConfirm}
-                >
-                  Confirmar
-                </button>
-                <button
-                  className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-                  onClick={closeSecondModal}
-                >
-                  Cancelar
-                </button>
+          {isSecondModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center z-10">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              <div className="relative bg-white p-8 rounded-lg">
+                <div className="flex flex-col">
+                  <input
+                    type="password"
+                    placeholder="Nueva Contraseña"
+                    className="mb-4 px-8 py-2"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Confirmar Nueva Contraseña"
+                    className="mb-4 px-8 py-2"
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  />
+                  {error && <p className="text-red-500">{error}</p>}
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                    onClick={handleSecondModalConfirm}
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    onClick={closeSecondModal}
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useUsers } from "../context/UsersContext";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { handleSuccess, handleError } from "../utils/sweetAlerts";
 
 function UserFormPage() {
@@ -47,6 +47,7 @@ function UserFormPage() {
       }
     } catch (error) {
       console.error(error);
+      handleError(`${errorMessage}`);
     }
   });
 
@@ -69,7 +70,7 @@ function UserFormPage() {
 
   useEffect(() => {
     if (usersErrors && usersErrors.length > 0) {
-      const errorMessage = usersErrors[0]; // Obtener el primer elemento del array
+      const errorMessage = usersErrors[0];
       handleError(`${errorMessage}`);
     }
   }, [usersErrors]);
@@ -145,12 +146,17 @@ function UserFormPage() {
           )}
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-10">
+          <Link to="#" onClick={() => window.history.back()}>
+            <button className="my-4 w-max bg-gray-400 rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-gray-600 text-white">
+              Regresar
+            </button>
+          </Link>
           <button
             type="submit"
-            className="my-4 w-full bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white"
+            className="my-4 w-max bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white"
           >
-            Registrarse
+            Enviar
           </button>
         </div>
       </form>

@@ -7,6 +7,7 @@ import {
   deleteUsersRequest,
   verifyPasswordRequest,
 } from "../api/users";
+import { handleError } from "../utils/sweetAlerts";
 
 const UserContext = createContext();
 
@@ -59,7 +60,7 @@ export function UserProvider({ children }) {
       setUserAdd(true);
       setErrors([]);
     } catch (error) {
-      console.log(error.response);
+      handleError(`${errorMessage}`);
       setErrors(
         Array.isArray(error.response.data)
           ? error.response.data

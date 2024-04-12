@@ -35,14 +35,7 @@ function VerificationPage() {
     };
   }, [id, getUser, navigate]);
 
-  return (
-    <div>
-      <div>VerificationPage</div>
-      {showModal && !changePassword && (
-        <Modal /*  closeModal={closeModal}  */ />
-      )}
-    </div>
-  );
+  return <div>{showModal && !changePassword && <Modal />}</div>;
 }
 
 export default VerificationPage;
