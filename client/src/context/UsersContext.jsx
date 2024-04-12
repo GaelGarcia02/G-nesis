@@ -60,7 +60,6 @@ export function UserProvider({ children }) {
       setUserAdd(true);
       setErrors([]);
     } catch (error) {
-      handleError(`${errorMessage}`);
       setErrors(
         Array.isArray(error.response.data)
           ? error.response.data

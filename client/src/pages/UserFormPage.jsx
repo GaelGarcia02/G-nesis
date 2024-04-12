@@ -47,7 +47,6 @@ function UserFormPage() {
       }
     } catch (error) {
       console.error(error);
-      handleError(`${errorMessage}`);
     }
   });
 

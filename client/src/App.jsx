@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 
-import RegisterUserPage from "./pages/RegisterUserPage";
+import RegisterUserPage from "./pages/UserFormPage";
 import UsersPage from "./pages/UsersPage";
 import LoginPage from "./pages/LoginPage";
 import HorsesPages from "./pages/HorsesPages.jsx";
