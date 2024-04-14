@@ -50,7 +50,7 @@ export function ReportProvider({ children }) {
     try {
       const res = await deleteReportsRequest(id);
       if (res.status === 200)
-        setReports(horses.filter((report) => report._id !== id));
+        setReports(reports.filter((report) => report._id !== id));
     } catch (error) {
       console.log(error);
     }

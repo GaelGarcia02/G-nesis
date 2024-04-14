@@ -21,6 +21,7 @@ function HorseFormPage() {
   const navigate = useNavigate();
   const [resetForm, setResetForm] = useState(false);
   const params = useParams();
+  const [title, setTitle] = useState("Agregar Caballo");
 
   useEffect(() => {
     async function loadHorse() {
@@ -31,6 +32,7 @@ function HorseFormPage() {
         setValue("age", horse.age);
         setValue("breed", horse.breed);
         setValue("diseases", horse.diseases);
+        setTitle("Actualizar Caballo");
       }
     }
     loadHorse();
@@ -41,11 +43,11 @@ function HorseFormPage() {
       if (params.id) {
         updateHorse(params.id, data);
         setResetForm(true);
-        handleSuccess("Actualizado con exito");
+        handleSuccess("Actualizado con éxito");
       } else {
         await createHorse(data);
         setResetForm(true);
-        handleSuccess("Registrado con exito");
+        handleSuccess("Registrado con éxito");
       }
     } catch (error) {
       console.error(error);
@@ -54,7 +56,7 @@ function HorseFormPage() {
 
   useEffect(() => {
     if (resetForm && horseAdd) {
-      handleSuccess("Registrado con exito");
+      handleSuccess("Registrado con éxito");
       const timer = setTimeout(() => {
         setResetForm(false);
       }, 1000);
@@ -80,9 +82,7 @@ function HorseFormPage() {
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
         <form onSubmit={onSubmit}>
-          <h1 className="text-2xl font-bold mb-4 text-center">
-            Agregar Caballo
-          </h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">{title}</h1>
 
           <div className="mb-4">
             <label className="font-medium" htmlFor="name">
@@ -113,6 +113,11 @@ function HorseFormPage() {
               name="age"
               placeholder="Edad"
               autoComplete="age"
+              onInput={(e) => {
+                e.target.value = e.target.value
+                  .replace(/[^0-9]/g, "")
+                  .slice(0, 10);
+              }}
               {...register("age", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
             />

@@ -18,8 +18,11 @@ function UserFormPage() {
     errors: usersErrors,
     userAdd,
   } = useUsers();
+
   const navigate = useNavigate();
+
   const [resetForm, setResetForm] = useState(false);
+  const [title, setTitle] = useState("Agregar Usuario");
   const params = useParams();
 
   useEffect(() => {
@@ -31,6 +34,7 @@ function UserFormPage() {
         setValue("email", user.email);
         setValue("password", user.password);
         setValue("typeUser", user.typeUser);
+        setTitle("Actualizar Usuario");
       }
     }
     loadUser();
@@ -38,6 +42,10 @@ function UserFormPage() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      if (!validateEmail(data.email)) {
+        throw new Error("Correo electrónico no válido");
+      }
+
       if (params.id) {
         await updateUser(params.id, data);
         setResetForm(true);
@@ -47,6 +55,7 @@ function UserFormPage() {
       }
     } catch (error) {
       console.error(error);
+      handleError(error.message);
     }
   });
 
@@ -70,14 +79,20 @@ function UserFormPage() {
   useEffect(() => {
     if (usersErrors && usersErrors.length > 0) {
       const errorMessage = usersErrors[0];
-      handleError(`${errorMessage}`);
+      handleError(errorMessage);
     }
   }, [usersErrors]);
 
+  const validateEmail = (email) => {
+    // Utiliza una expresión regular para validar el formato del correo electrónico
+    const regex = /^[^\s@]+@[^\s@]+\.(com|co)$/i;
+    return regex.test(email);
+  };
+
   return (
-    <div className="bg-white w-full p-10 rounded-lg mb-10 /**/ h-auto lg:mb-0 sm:max-w-85% xl:max-w-70%">
+    <div className="bg-white w-full p-10 rounded-lg mb-10 h-auto lg:mb-0 sm:max-w-85% xl:max-w-70%">
       <h1 className="text-2xl lg:mb-6 mb-4 text-center font-extrabold">
-        Registro
+        {title}
       </h1>
       <form onSubmit={onSubmit}>
         <div className="mb-2">
@@ -123,6 +138,9 @@ function UserFormPage() {
           />
           {formErrors.email && (
             <p className="text-red-500">El email es requerido</p>
+          )}
+          {formErrors.email?.type === "validate" && (
+            <p className="text-red-500">El email no es válido</p>
           )}
         </div>
         <div className="mb-2">

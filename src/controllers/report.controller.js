@@ -1,10 +1,11 @@
 import Check from "../models/report.model.js";
 
 export const createReport = async (req, res) => {
-  const { name, medicines, specifications, food, horseshoes, job } = req.body;
+  const { namehorse, medicines, specifications, food, horseshoes, job } =
+    req.body;
   try {
     const newReport = new Check({
-      name,
+      namehorse,
       medicines,
       specifications,
       food,
@@ -72,7 +73,7 @@ export const updateReport = async (req, res) => {
     if (!report)
       return res.status(404).json({ message: "Reporte no encontrado" });
 
-    res.json(user);
+    res.json(report);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useUsers } from "../context/UsersContext.jsx";
 import { useParams, useNavigate } from "react-router-dom";
+import { handleError, handleSuccess } from "../utils/sweetAlerts.js";
 
 function Modal({ closeModal }) {
   const { logout } = useAuth();
@@ -22,9 +23,11 @@ function Modal({ closeModal }) {
 
     try {
       await updateUser(id, { password, passwordChange: true });
+      handleSuccess("Inicio de sesión exitoso");
       navigate("/horses");
     } catch (error) {
       setError("Hubo un error al cambiar la contraseña");
+      handleError({ error });
     }
   };
 

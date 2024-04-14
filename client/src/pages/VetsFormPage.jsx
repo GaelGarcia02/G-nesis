@@ -11,6 +11,7 @@ function VetFormPage() {
     formState: { errors: formErrors },
     setValue,
   } = useForm();
+
   const {
     createVet,
     getVet,
@@ -18,8 +19,12 @@ function VetFormPage() {
     errors: vetsErrors,
     vetAdd,
   } = useVets();
+
   const navigate = useNavigate();
+
   const [resetForm, setResetForm] = useState(false);
+  const [title, setTitle] = useState("Agregar Veterinario");
+
   const params = useParams();
 
   useEffect(() => {
@@ -33,6 +38,7 @@ function VetFormPage() {
         setValue("gender", vet.gender);
         setValue("email", vet.email);
         setValue("phone", vet.phone);
+        setTitle("Actualizar Veterinario");
       }
     }
     loadHorse();
@@ -80,9 +86,7 @@ function VetFormPage() {
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
         <form onSubmit={onSubmit}>
-          <h1 className="text-2xl font-bold mb-4 text-center">
-            Agregar Veterinario
-          </h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">{title}</h1>
 
           <div className="mb-4">
             <label className="font-medium" htmlFor="firstName">

@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 
 const reportSchema = new mongoose.Schema({
-  name: {
+  namehorse: {
     type: String,
     required: true,
     trim: true,
-    unique: true,
   },
   medicines: {
     type: String,
@@ -26,6 +25,10 @@ const reportSchema = new mongoose.Schema({
   job: {
     type: Number,
     required: true,
+  },
+  updateDate: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

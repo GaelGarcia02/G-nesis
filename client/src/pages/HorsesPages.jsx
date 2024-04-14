@@ -24,7 +24,10 @@ function HorsesPages() {
 
   return (
     <div>
-      <div className="flex justify-center lg:justify-start lg:mx-5">
+      <h1 className="text-3xl font-bold text-center mt-10">
+        Caballos Disponibles
+      </h1>
+      <div className="flex justify-center lg:mx-5">
         {isAuthenticated && userType !== "common" && (
           <Link
             to="/horses/add"

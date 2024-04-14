@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const regRepSchema = z.object({
-  name: z.string({
+  namehorse: z.string({
     required_error: "El nombre es requerido",
   }),
   medicines: z.string({
@@ -22,7 +22,7 @@ export const regRepSchema = z.object({
 });
 
 export const upRepSchema = z.object({
-  name: z
+  namehorse: z
     .string({
       required_error: "El nombre es requerido",
     })
