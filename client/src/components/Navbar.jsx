@@ -22,7 +22,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-[#57ae60] flex justify-between items-center w-full py-3 px-4 text-white font-bold">
+    <nav className="bg-[#448dc9] flex justify-between items-center w-full py-3 px-4 text-white font-bold">
       <div className="flex items-center">
         <button
           onClick={handleMenuToggle}
@@ -39,7 +39,7 @@ function Navbar() {
         <li>
           <Link
             to="/horses"
-            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
           >
             Inicio
           </Link>
@@ -50,7 +50,7 @@ function Navbar() {
             <li>
               <Link
                 to="/users"
-                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+                className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
               >
                 Usuarios
               </Link>
@@ -60,7 +60,7 @@ function Navbar() {
         <li>
           <Link
             to="/vets"
-            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
           >
             Veterinarios
           </Link>
@@ -71,7 +71,7 @@ function Navbar() {
         <li>
           <Link
             to="/reports"
-            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
           >
             Reportes
           </Link>
@@ -80,7 +80,7 @@ function Navbar() {
         <li>
           <Link
             to={user ? `profile/${user.id}` : "/"}
-            className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
           >
             Perfil
           </Link>
@@ -89,18 +89,18 @@ function Navbar() {
 
       <Link
         onClick={() => confirmLogout(logout)}
-        className="hidden lg:block hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-6 py-3 ml-auto"
+        className="hidden lg:block hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3 ml-auto"
       >
         Cerrar Sesión
       </Link>
 
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div className="bg-[#57ae60] h-full w-64 py-4 px-6 flex flex-col relative">
+          <div className="bg-[#448dc9] h-full w-64 py-4 px-6 flex flex-col relative">
             <div className="flex justify-end">
               <button
                 onClick={handleMenuToggle}
-                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 flex justify-end mb-5 right-0 "
+                className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 flex justify-end mb-5 right-0 "
               >
                 X
               </button>
@@ -108,7 +108,7 @@ function Navbar() {
             <Link
               to="/horses"
               onClick={handleLinkClick}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
             >
               Inicio
             </Link>
@@ -116,7 +116,7 @@ function Navbar() {
               <Link
                 to="/users"
                 onClick={handleLinkClick}
-                className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+                className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
               >
                 Usuarios
               </Link>
@@ -124,14 +124,14 @@ function Navbar() {
             <Link
               to="/vets"
               onClick={handleLinkClick}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
             >
               Veterinarios
             </Link>
             <Link
               to="/reports"
               onClick={handleLinkClick}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
             >
               Reportes
             </Link>
@@ -139,13 +139,13 @@ function Navbar() {
             <Link
               to={user ? `profile/${user.id}` : "/"}
               onClick={handleLinkClick}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
             >
               Perfil
             </Link>
             <Link
               onClick={() => confirmLogout(logout)}
-              className="hover:bg-[#376e3c] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-2 mt-auto"
+              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-2 mt-auto"
             >
               Cerrar Sesión
             </Link>

@@ -90,93 +90,93 @@ function UserFormPage() {
   };
 
   return (
-    <div className="bg-white w-full p-10 rounded-lg mb-10 h-auto lg:mb-0 sm:max-w-85% xl:max-w-70%">
-      <h1 className="text-2xl lg:mb-6 mb-4 text-center font-extrabold">
-        {title}
-      </h1>
-      <form onSubmit={onSubmit}>
-        <div className="mb-2">
-          <label className="font-medium" htmlFor="username">
-            Nombre de Usuario:
-          </label>
-          <input
-            type="text"
-            {...register("username", { required: true })}
-            className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            placeholder="Ej: NombreDeUsuario"
-            id="username"
-          />
-          {formErrors.username && (
-            <p className="text-red-500">El nombre de usuario es requerido</p>
-          )}
-        </div>
-        <div className="mb-2">
-          <label className="font-medium" htmlFor="name">
-            Nombre:
-          </label>
-          <input
-            type="text"
-            {...register("name", { required: true })}
-            className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            placeholder="Ej: Sergio Amador"
-            id="name"
-          />
-          {formErrors.name && (
-            <p className="text-red-500">El nombre es requerido</p>
-          )}
-        </div>
-        <div className="mb-2">
-          <label className="font-medium" htmlFor="email">
-            Correo Electrónico:
-          </label>
-          <input
-            type="email"
-            {...register("email", { required: true })}
-            className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            placeholder="Ej: example@gmail.com"
-            id="email"
-          />
-          {formErrors.email && (
-            <p className="text-red-500">El email es requerido</p>
-          )}
-          {formErrors.email?.type === "validate" && (
-            <p className="text-red-500">El email no es válido</p>
-          )}
-        </div>
-        <div className="mb-2">
-          <label className="font-medium" htmlFor="typeUser">
-            Tipo de Usuario:
-          </label>
-          <select
-            type="typeUser"
-            {...register("typeUser", { required: true })}
-            className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            placeholder="Seleccione el tipo de usuario"
-            id="typeUser"
-          >
-            <option value="">--Seleccione el tipo de usuario--</option>
-            <option value="common">Usuario Normal</option>
-            <option value="manager">Usuario Encargado</option>
-          </select>
-          {formErrors.typeUser && (
-            <p className="text-red-500">El tipo de usuario es requerido</p>
-          )}
-        </div>
+    <div className="flex items-center justify-center flex-col">
+      <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
+        <form onSubmit={onSubmit}>
+          <h1 className="text-2xl font-bold mb-8 text-center">{title}</h1>
+          <div className="mb-2">
+            <label className="font-medium" htmlFor="username">
+              Nombre de Usuario:
+            </label>
+            <input
+              type="text"
+              {...register("username", { required: true })}
+              className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              placeholder="Ej: NombreDeUsuario"
+              id="username"
+            />
+            {formErrors.username && (
+              <p className="text-red-500">El nombre de usuario es requerido</p>
+            )}
+          </div>
+          <div className="mb-2">
+            <label className="font-medium" htmlFor="name">
+              Nombre:
+            </label>
+            <input
+              type="text"
+              {...register("name", { required: true })}
+              className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              placeholder="Ej: Sergio Amador"
+              id="name"
+            />
+            {formErrors.name && (
+              <p className="text-red-500">El nombre es requerido</p>
+            )}
+          </div>
+          <div className="mb-2">
+            <label className="font-medium" htmlFor="email">
+              Correo Electrónico:
+            </label>
+            <input
+              type="email"
+              {...register("email", { required: true })}
+              className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              placeholder="Ej: example@gmail.com"
+              id="email"
+            />
+            {formErrors.email && (
+              <p className="text-red-500">El email es requerido</p>
+            )}
+            {formErrors.email?.type === "validate" && (
+              <p className="text-red-500">El email no es válido</p>
+            )}
+          </div>
+          <div className="mb-2">
+            <label className="font-medium" htmlFor="typeUser">
+              Tipo de Usuario:
+            </label>
+            <select
+              type="typeUser"
+              {...register("typeUser", { required: true })}
+              className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              placeholder="Seleccione el tipo de usuario"
+              id="typeUser"
+            >
+              <option value="">--Seleccione el tipo de usuario--</option>
+              <option value="common">Usuario Normal</option>
+              <option value="manager">Usuario Encargado</option>
+            </select>
+            {formErrors.typeUser && (
+              <p className="text-red-500">El tipo de usuario es requerido</p>
+            )}
+          </div>
 
-        <div className="flex justify-center gap-10">
-          <Link to="#" onClick={() => window.history.back()}>
-            <button className="my-4 w-max bg-gray-400 rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-gray-600 text-white">
-              Regresar
+          <div className="flex justify-center gap-10">
+            <Link to="#" onClick={() => window.history.back()}>
+              <button className="my-4 w-max bg-gray-400 rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-gray-600 text-white">
+                Regresar
+              </button>
+            </Link>
+            <button
+              type="submit"
+              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white"
+            >
+              Enviar
             </button>
-          </Link>
-          <button
-            type="submit"
-            className="my-4 w-max bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white"
-          >
-            Enviar
-          </button>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

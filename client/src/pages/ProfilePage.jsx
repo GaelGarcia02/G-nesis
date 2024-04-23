@@ -120,7 +120,7 @@ function ProfilePage() {
         <div className="flex flex-col my-8">
           <h1 className="text-xl font-bold">Cambio de Contraseña:</h1>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded"
+            className="bg-blue-500 hover:bg-blue-700 transition duration-150 ease-in-out text-white font-bold py-2 px-4 mt-4 rounded"
             onClick={openFirstModal}
           >
             Cambiar Contraseña
@@ -139,13 +139,13 @@ function ProfilePage() {
                   />
                   {error && <p className="text-red-500">{error}</p>}
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                    className="bg-blue-500 hover:bg-blue-700 transition duration-150 ease-in-out text-white font-bold py-2 px-4 rounded my-2"
                     onClick={handleFirstModalConfirm}
                   >
                     Confirmar
                   </button>
                   <button
-                    className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    className="bg-gray-400 hover:bg-gray-600 transition duration-150 ease-in-out text-white font-bold py-2 px-4 rounded mt-4"
                     onClick={closeFirstModal}
                   >
                     Cancelar
@@ -176,13 +176,13 @@ function ProfilePage() {
                   />
                   {error && <p className="text-red-500">{error}</p>}
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                    className="bg-blue-500 hover:bg-blue-700 transition duration-150 ease-in-out text-white font-bold py-2 px-4 rounded my-2"
                     onClick={handleSecondModalConfirm}
                   >
                     Confirmar
                   </button>
                   <button
-                    className="bg-gray-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    className="bg-gray-400 hover:bg-gray-600 transition duration-150 ease-in-out text-white font-bold py-2 px-4 rounded mt-4"
                     onClick={closeSecondModal}
                   >
                     Cancelar

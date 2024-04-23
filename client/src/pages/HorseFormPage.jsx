@@ -172,7 +172,7 @@ function HorseFormPage() {
             </Link>
             <button
               type="submit"
-              className="my-4 w-max bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white"
+              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white"
             >
               Enviar
             </button>

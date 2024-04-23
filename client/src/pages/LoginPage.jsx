@@ -51,7 +51,7 @@ function LoginPage() {
           className="max-w-90% mb-6 h-auto w-full /**/ lg:max-w-45% lg:mb-0 aspect-auto"
         />
       </aside>
-      <main className="bg-[#57ae60] w-12/12 p-8 flex flex-col  /**/ lg:h-screen lg:justify-center lg:w-5/12 lg:mb-0 sm:items-center">
+      <main className="bg-[#448dc9] w-12/12 p-8 flex flex-col  /**/ lg:h-screen lg:justify-center lg:w-5/12 lg:mb-0 sm:items-center">
         <h1 className="text-5xl mb-10 font-extrabold text-white text-center">
           ¡Bienvenido!
         </h1>
@@ -97,10 +97,10 @@ function LoginPage() {
               <button
                 type="submit"
                 disabled={!formData.email || !formData.password}
-                className={`my-4 w-full rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out ${
+                className={`my-4 w-max rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out ${
                   !formData.email || !formData.password
-                    ? "bg-[#438049] cursor-not-allowed"
-                    : "bg-[#57ae60] hover:bg-[#376e3c] text-white"
+                    ? "bg-[#274f70] cursor-not-allowed"
+                    : "bg-[#448dc9] hover:bg-[#346c99] text-white"
                 }`}
               >
                 ENTRAR

@@ -64,14 +64,17 @@ function ReportsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-4">Reportes</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Reportes</h1>
       <div className="flex justify-center">
-        <Link
-          to="/reports/add"
-          className="my-4 w-max bg-[#57ae60] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#376e3c] text-white text-center"
-        >
-          Agregar
-        </Link>
+        {isAuthenticated &&
+          (userType === "manager" || userType === "superadmin") && (
+            <Link
+              to="/reports/add"
+              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white text-center"
+            >
+              Agregar
+            </Link>
+          )}
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center">
