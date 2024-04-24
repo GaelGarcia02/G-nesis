@@ -27,7 +27,7 @@ function HorsesPages() {
       <h1 className="text-3xl font-bold text-center mt-10">
         Caballos Disponibles
       </h1>
-      <div className="flex justify-center lg:mx-5">
+      <div className="flex justify-center my-4 lg:mx-5">
         {isAuthenticated && userType !== "common" && (
           <Link
             to="/horses/add"
@@ -38,13 +38,13 @@ function HorsesPages() {
         )}
       </div>
 
-      <div className="">
+      <div className="mt-4">
         {horses.length === 0 ? (
           <div>
             <h1>No hay caballitos</h1>
           </div>
         ) : (
-          <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4">
+          <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-10">
             {horses.map((horse) => (
               <HorseCard
                 horse={horse}

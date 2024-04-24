@@ -10,39 +10,27 @@ function ReportsPage() {
   const { isAuthenticated, userType } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     getReports();
   }, []);
 
-  const filteredReports = reports.filter((report) =>
-    report.namehorse.includes(searchTerm.toLowerCase())
+  const filteredReports = reports.filter(
+    (report) =>
+      report.namehorse &&
+      report.namehorse.toLowerCase().includes((searchTerm ?? "").toLowerCase())
   );
 
   const handleSortChange = (value) => {
     setSortType(value);
   };
 
-  const renderSortOption = () => {
-    switch (sortType) {
-      case "nameAsc":
-        return "Nombre (A-Z)";
-      case "nameDesc":
-        return "Nombre (Z-A)";
-      case "hoursAsc":
-        return "Horas Trabajadas (Menor a Mayor)";
-      case "hoursDesc":
-        return "Horas Trabajadas (Mayor a Menor)";
-      case "dateAsc":
-        return "Fecha de Creación (Antigua a Reciente)";
-      case "dateDesc":
-        return "Fecha de Creación (Reciente a Antigua)";
-      default:
-        return "Ninguno";
-    }
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
-  // Función para ordenar los reportes
   const sortedReports = [...filteredReports].sort((a, b) => {
     switch (sortType) {
       case "nameAsc":
@@ -62,10 +50,14 @@ function ReportsPage() {
     }
   });
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedReports.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Reportes</h1>
-      <div className="flex justify-center">
+      <h1 className="text-3xl font-bold text-center mb-2">Reportes</h1>
+      <div className="flex justify-center mb-4">
         {isAuthenticated &&
           (userType === "manager" || userType === "superadmin") && (
             <Link
@@ -77,8 +69,8 @@ function ReportsPage() {
           )}
       </div>
       <div className="flex md:flex-row flex-col justify-between gap-6 items-center">
-        <div className="flex items-center">
-          <p className="mr-2">Ordenar por:</p>
+        <div className="flex sm:flex-row flex-col  mb-4 items-center sm:w-20% w-70%">
+          <p className="mr-2 font-semibold mb-2">Ordenar por:</p>
           <select
             value={sortType}
             onChange={(e) => handleSortChange(e.target.value)}
@@ -90,10 +82,10 @@ function ReportsPage() {
             <option value="hoursAsc">Horas Trabajadas (Menor a Mayor)</option>
             <option value="hoursDesc">Horas Trabajadas (Mayor a Menor)</option>
             <option value="dateAsc">
-              Fecha de Creación (Antigua a Reciente)
+              Fecha de Modificación (Antigua a Reciente)
             </option>
             <option value="dateDesc">
-              Fecha de Creación (Reciente a Antigua)
+              Fecha de Modificación (Reciente a Antigua)
             </option>
           </select>
         </div>
@@ -123,7 +115,8 @@ function ReportsPage() {
                 Horas Trabajadas
               </th>
               <th className="border border-gray-300 px-4 py-2">
-                Fecha de Creación
+                Fecha de <br />
+                Modificación
               </th>
               {isAuthenticated && userType === "manager" && (
                 <th className="border border-gray-300 px-4 py-2">Acciones</th>
@@ -131,10 +124,10 @@ function ReportsPage() {
             </tr>
           </thead>
           <tbody>
-            {sortedReports.map((report, index) => (
+            {currentItems.map((report, index) => (
               <tr key={report._id || index} className="hover:bg-gray-100">
                 <td className="border border-gray-300 px-4 py-2">
-                  {report.namehorse}
+                  {report.namehorse ? report.namehorse : ""}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {report.medicines}
@@ -179,6 +172,23 @@ function ReportsPage() {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="flex justify-center mt-4 ">
+        <ul className="flex gap-2 ">
+          {Array(Math.ceil(sortedReports.length / itemsPerPage))
+            .fill()
+            .map((_, index) => (
+              <li
+                key={index}
+                className={`cursor-pointer bg-zinc-200 px-2 py-1 hover:bg-zinc-400 transition duration-150 ease-in-out ${
+                  currentPage === index + 1 ? "text-black" : ""
+                }`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </li>
+            ))}
+        </ul>
       </div>
     </div>
   );
