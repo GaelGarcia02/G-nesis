@@ -33,31 +33,42 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
           </svg>
         </button>
         <header>
-          <h2 className="text-xl text-center font-bold mb-4">{horse.name}</h2>
+          <h2 className="text-xl text-center font-bold mb-10">{horse.name}</h2>
         </header>
         <div>
-          <p>Edad: {horse.age} años</p>
-          <p>Raza: {horse.breed}</p>
-          <p>Enfermedades: {horse.diseases}</p>
+          <ul className="flex flex-col space-y-2">
+            <li className="flex justify-between">
+              <span className="font-bold">Edad:</span>
+              <span>{horse.age} años</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-bold">Raza:</span>
+              <span>{horse.breed}</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-bold">Enfermedades:</span>
+              <span>{horse.diseases}</span>
+            </li>
+          </ul>
         </div>
         {isAuthenticated &&
           (userType === "admin" || userType === "superadmin") && (
-            <footer className="flex justify-center mt-6 space-x-4">
+            <footer className="flex justify-end mt-6 space-x-4">
+              <button
+                onClick={() => {
+                  handleDelete(horse._id, deleteHorse, "caballo");
+                  onClose();
+                }}
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Eliminar
+              </button>
               <Link
                 to={`/horses/${horse._id}`}
                 className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500"
               >
                 Editar
               </Link>
-              <button
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={() => {
-                  handleDelete(horse._id, deleteHorse, "caballo");
-                  onClose();
-                }}
-              >
-                Eliminar
-              </button>
             </footer>
           )}
       </div>

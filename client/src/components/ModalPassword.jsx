@@ -34,12 +34,20 @@ function Modal() {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
       <div className="bg-white rounded-lg p-8">
-        <h2 className="text-center text-xl font-bold mb-4">
+        <h2 className="text-center text-2xl font-bold mb-4">
           Cambiar Contraseña
         </h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
+            <div className="mt-4 mb-8">
+              <p className="text-lg text-center">
+                Parece que es la primera vez que inicias sesión.
+              </p>
+              <p className="text-lg text-center">
+                Cambia tu contraseña para continuar
+              </p>
+            </div>
             <label htmlFor="password" className="block mb-1">
               Nueva Contraseña:
             </label>
@@ -65,13 +73,13 @@ function Modal() {
           </div>
           <button
             type="submit"
-            className="block w-full px-4 py-2 bg-blue-500 text-white rounded-md"
+            className="block w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 transition duration-150 ease-in-out text-white rounded-md"
           >
             Cambiar Contraseña
           </button>
         </form>
         <button
-          className="block w-full mt-4 px-4 py-2 bg-gray-500 text-white rounded-md"
+          className="block w-full mt-4 px-4 py-2 bg-gray-500 hover:bg-gray-600 transition duration-150 ease-in-out text-white rounded-md"
           onClick={() => logout()}
         >
           Cerrar Sesión

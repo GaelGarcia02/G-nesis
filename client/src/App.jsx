@@ -14,6 +14,7 @@ import RedirectPage from "./pages/RedirectPage.jsx";
 import VerificationPage from "./pages/VerificationPage.jsx";
 import ReportsFormPage from "./pages/ReportsFormPage.jsx";
 import ReportsPage from "./pages/ReportsPage.jsx";
+import NotFoundPage from "./pages/NotFoundPage";
 
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -43,13 +44,23 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
-
   const isLoginPage = location.pathname === "/";
   const isVerificationPage = location.pathname.startsWith("/verification/");
+  const isNotFoundPage = location.pathname === "/404"; // Cambiamos a la ruta correcta de la página 404
+
+  const allowedRoutes = ["/horses", "/vets", "/users", "/reports", "/profile"];
+
+  // Verificamos si la ruta actual corresponde a una de las páginas en las que queremos mostrar el Navbar
+  const shouldShowNavbar = allowedRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
 
   return (
     <>
-      {!isLoginPage && !isVerificationPage && <Navbar />}
+      {shouldShowNavbar &&
+        !isLoginPage &&
+        !isVerificationPage &&
+        !isNotFoundPage && <Navbar />}{" "}
       <Routes>
         <Route path="/" element={<LoginPage />} />
 
@@ -76,6 +87,7 @@ function AppContent() {
             <Route path="/verification/:id" element={<VerificationPage />} />
           </Route>
         )}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
