@@ -16,7 +16,7 @@ function ReportsPage() {
   }, []);
 
   const filteredReports = reports.filter((report) =>
-    report.namehorse.toLowerCase().includes(searchTerm.toLowerCase())
+    report.namehorse.includes(searchTerm.toLowerCase())
   );
 
   const handleSortChange = (value) => {
@@ -76,7 +76,7 @@ function ReportsPage() {
             </Link>
           )}
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex md:flex-row flex-col justify-between gap-6 items-center">
         <div className="flex items-center">
           <p className="mr-2">Ordenar por:</p>
           <select

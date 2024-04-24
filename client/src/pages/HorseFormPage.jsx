@@ -22,6 +22,12 @@ function HorseFormPage() {
   const [resetForm, setResetForm] = useState(false);
   const params = useParams();
   const [title, setTitle] = useState("Agregar Caballo");
+  const [formFields, setFormFields] = useState({
+    name: "",
+    age: "",
+    breed: "",
+    diseases: "",
+  });
 
   useEffect(() => {
     async function loadHorse() {
@@ -33,6 +39,7 @@ function HorseFormPage() {
         setValue("breed", horse.breed);
         setValue("diseases", horse.diseases);
         setTitle("Actualizar Caballo");
+        setFormFields(horse);
       }
     }
     loadHorse();
@@ -78,6 +85,11 @@ function HorseFormPage() {
     }
   }, [horsesErrors]);
 
+  // Función para verificar si algún campo está vacío
+  const isFormEmpty = () => {
+    return Object.values(formFields).some((value) => value === "");
+  };
+
   return (
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
@@ -97,6 +109,9 @@ function HorseFormPage() {
               autoFocus
               {...register("name", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, name: e.target.value })
+              }
             />
             {formErrors.name && (
               <p className="text-red-500 mb-2">El nombre es requerido</p>
@@ -120,6 +135,9 @@ function HorseFormPage() {
               }}
               {...register("age", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, age: e.target.value })
+              }
             />
             {formErrors.age && (
               <p className="text-red-500 mb-2">La edad es requerida</p>
@@ -138,6 +156,9 @@ function HorseFormPage() {
               autoComplete="breed"
               {...register("breed", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, breed: e.target.value })
+              }
             />
             {formErrors.breed && (
               <p className="text-red-500 mb-2">La raza es requerida</p>
@@ -156,6 +177,9 @@ function HorseFormPage() {
               autoComplete="diseases"
               {...register("diseases", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, diseases: e.target.value })
+              }
             ></textarea>
             {formErrors.diseases && (
               <p className="text-red-500 mb-2">
@@ -172,7 +196,12 @@ function HorseFormPage() {
             </Link>
             <button
               type="submit"
-              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white"
+              disabled={isFormEmpty()}
+              className={`my-4 w-max rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out ${
+                isFormEmpty()
+                  ? "bg-[#336c97] cursor-not-allowed"
+                  : "bg-[#448dc9] hover:bg-[#2a567a] text-white"
+              }`}
             >
               Enviar
             </button>

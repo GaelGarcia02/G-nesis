@@ -4,7 +4,7 @@ import { useUsers } from "../context/UsersContext.jsx";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleError, handleSuccess } from "../utils/sweetAlerts.js";
 
-function Modal({ closeModal }) {
+function Modal() {
   const { logout } = useAuth();
   const { updateUser } = useUsers();
   const { id } = useParams();

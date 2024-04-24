@@ -11,7 +11,6 @@ function VetFormPage() {
     formState: { errors: formErrors },
     setValue,
   } = useForm();
-
   const {
     createVet,
     getVet,
@@ -19,39 +18,48 @@ function VetFormPage() {
     errors: vetsErrors,
     vetAdd,
   } = useVets();
-
   const navigate = useNavigate();
-
   const [resetForm, setResetForm] = useState(false);
-  const [title, setTitle] = useState("Agregar Veterinario");
-
   const params = useParams();
+  const [title, setTitle] = useState("Agregar Veterinario");
+  const [formFields, setFormFields] = useState({
+    firstName: "",
+    lastName: "",
+    age: "",
+    email: "",
+    phone: "",
+  });
 
   useEffect(() => {
-    async function loadHorse() {
+    async function loadVet() {
       if (params.id) {
         const vet = await getVet(params.id);
-        console.log(vet);
         setValue("firstName", vet.firstName);
         setValue("lastName", vet.lastName);
         setValue("age", vet.age);
-        setValue("gender", vet.gender);
         setValue("email", vet.email);
         setValue("phone", vet.phone);
         setTitle("Actualizar Veterinario");
+        setFormFields(vet);
       }
     }
-    loadHorse();
+    loadVet();
   }, []);
+
+  const isFormEmpty = () => {
+    return Object.values(formFields).some((value) => value === "");
+  };
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       if (params.id) {
         updateVet(params.id, data);
         setResetForm(true);
+        handleSuccess("Actualizado con éxito");
       } else {
         await createVet(data);
         setResetForm(true);
+        handleSuccess("Registrado con éxito");
       }
     } catch (error) {
       console.error(error);
@@ -60,7 +68,7 @@ function VetFormPage() {
 
   useEffect(() => {
     if (resetForm && vetAdd) {
-      handleSuccess("Registrado con exito");
+      handleSuccess("Registrado con éxito");
       const timer = setTimeout(() => {
         setResetForm(false);
       }, 1000);
@@ -101,11 +109,15 @@ function VetFormPage() {
               autoFocus
               {...register("firstName", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, firstName: e.target.value })
+              }
             />
             {formErrors.firstName && (
               <p className="text-red-500 mb-2">El nombre es requerido</p>
             )}
           </div>
+
           <div className="mb-4">
             <label className="font-medium" htmlFor="lastName">
               Apellido:
@@ -118,11 +130,15 @@ function VetFormPage() {
               autoComplete="lastName"
               {...register("lastName", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, lastName: e.target.value })
+              }
             />
             {formErrors.lastName && (
               <p className="text-red-500 mb-2">El apellido es requerido</p>
             )}
           </div>
+
           <div className="mb-4">
             <label className="font-medium" htmlFor="age">
               Edad:
@@ -133,13 +149,22 @@ function VetFormPage() {
               name="age"
               placeholder="Edad"
               autoComplete="age"
+              onInput={(e) => {
+                e.target.value = e.target.value
+                  .replace(/[^0-9]/g, "")
+                  .slice(0, 10);
+              }}
               {...register("age", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, age: e.target.value })
+              }
             />
             {formErrors.age && (
               <p className="text-red-500 mb-2">La edad es requerida</p>
             )}
           </div>
+
           <div className="mb-4">
             <label className="font-medium" htmlFor="email">
               Correo Electrónico:
@@ -152,11 +177,15 @@ function VetFormPage() {
               autoComplete="email"
               {...register("email", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, email: e.target.value })
+              }
             />
             {formErrors.email && (
               <p className="text-red-500 mb-2">El email es requerido</p>
             )}
           </div>
+
           <div className="mb-4">
             <label className="font-medium" htmlFor="phone">
               Teléfono:
@@ -168,13 +197,15 @@ function VetFormPage() {
               placeholder="Número de Teléfono"
               maxLength={10}
               onInput={(e) => {
-                // Este código asegura que solo se permitan números
                 e.target.value = e.target.value
                   .replace(/[^0-9]/g, "")
                   .slice(0, 10);
               }}
               {...register("phone", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, phone: e.target.value })
+              }
             />
             {formErrors.phone && (
               <p className="text-red-500 mb-2">
@@ -191,7 +222,12 @@ function VetFormPage() {
             </Link>
             <button
               type="submit"
-              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white"
+              disabled={isFormEmpty()}
+              className={`my-4 w-max rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out ${
+                isFormEmpty()
+                  ? "bg-[#336c97] cursor-not-allowed"
+                  : "bg-[#448dc9] hover:bg-[#2a567a] text-white"
+              }`}
             >
               Enviar
             </button>

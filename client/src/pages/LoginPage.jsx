@@ -47,7 +47,7 @@ function LoginPage() {
       <aside className="flex justify-center items-center w-4/12 max-h-60% min-h-20% /**/ lg:max-h-full lg:w-7/12 lg:h-full">
         <img
           src={logo}
-          alt=""
+          alt="logo"
           className="max-w-90% mb-6 h-auto w-full /**/ lg:max-w-45% lg:mb-0 aspect-auto"
         />
       </aside>

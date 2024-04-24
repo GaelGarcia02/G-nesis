@@ -1,8 +1,8 @@
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { handleError, handleSuccess } from "../utils/sweetAlerts";
 import { useReports } from "../context/ReportsContext";
 import { useHorses } from "../context/HorsesContext";
-import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 function ReportFormPage() {
@@ -26,13 +26,21 @@ function ReportFormPage() {
   const params = useParams();
   const [selectedMedicines, setSelectedMedicines] = useState([]);
   const [title, setTitle] = useState("Agregar Reporte");
+  const [formFields, setFormFields] = useState({
+    namehorse: "",
+    medicines: "",
+    specifications: "",
+    food: "",
+    horseshoes: "",
+    job: "",
+  });
 
   useEffect(() => {
     async function loadReport() {
       if (params.id) {
         const report = await getReport(params.id);
         console.log(report);
-        setValue("name", report.namehorse);
+        setValue("namehorse", report.namehorse);
         setValue("medicines", report.medicines);
         setValue("specifications", report.specifications);
         setValue("food", report.food);
@@ -43,6 +51,15 @@ function ReportFormPage() {
         setSelectedMedicines(
           report.medicines.split(",").map((medicine) => medicine.trim())
         );
+        setFormFields({
+          ...formFields,
+          namehorse: report.namehorse,
+          medicines: report.medicines,
+          specifications: report.specifications,
+          food: report.food,
+          horseshoes: report.horseshoes,
+          job: report.job,
+        });
       }
     }
     loadReport();
@@ -68,10 +85,13 @@ function ReportFormPage() {
     }
   };
 
+  useEffect(() => {
+    setFormFields({ ...formFields, medicines: selectedMedicines.join(", ") });
+  }, [selectedMedicines]);
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       data.job = parseInt(data.job);
-
       data.medicines = selectedMedicines.join(", ");
 
       if (params.id) {
@@ -103,6 +123,18 @@ function ReportFormPage() {
     }
   }, [resetForm, reportsAdd, navigate]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormFields({ ...formFields, [name]: value });
+  };
+
+  const isFormEmpty = () => {
+    return (
+      Object.values(formFields).some((value) => value === "") ||
+      selectedMedicines.length === 0
+    );
+  };
+
   return (
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
@@ -119,6 +151,7 @@ function ReportFormPage() {
               autoComplete="namehorse"
               {...register("namehorse", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={handleChange}
             >
               <option value=""> -- Selecciona un Caballo -- </option>
               {horses.map((horse) => (
@@ -144,7 +177,6 @@ function ReportFormPage() {
                 />{" "}
                 Desparacitacion
               </label>
-
               <label>
                 <input
                   type="checkbox"
@@ -200,7 +232,7 @@ function ReportFormPage() {
           </div>
 
           <div className="mb-4">
-            <label className="font-medium" htmlFor="breed">
+            <label className="font-medium" htmlFor="specifications">
               Especificaciones:
             </label>
             <textarea
@@ -211,6 +243,7 @@ function ReportFormPage() {
               autoComplete="specifications"
               {...register("specifications", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={handleChange}
             />
             {formErrors.specifications && (
               <p className="text-red-500 mb-2">
@@ -220,7 +253,7 @@ function ReportFormPage() {
           </div>
 
           <div className="mb-4">
-            <label className="font-medium" htmlFor="diseases">
+            <label className="font-medium" htmlFor="food">
               Alimento:
             </label>
             <textarea
@@ -231,14 +264,15 @@ function ReportFormPage() {
               autoComplete="food"
               {...register("food", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            ></textarea>
+              onChange={handleChange}
+            />
             {formErrors.food && (
               <p className="text-red-500 mb-2">La comida es requerida</p>
             )}
           </div>
 
           <div className="mb-4">
-            <label className="font-medium" htmlFor="diseases">
+            <label className="font-medium" htmlFor="horseshoes">
               Desgaste de Herraje:
             </label>
             <textarea
@@ -249,14 +283,15 @@ function ReportFormPage() {
               autoComplete="horseshoes"
               {...register("horseshoes", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            ></textarea>
+              onChange={handleChange}
+            />
             {formErrors.horseshoes && (
               <p className="text-red-500 mb-2">El herraje es requerido</p>
             )}
           </div>
 
           <div className="mb-4">
-            <label className="font-medium" htmlFor="diseases">
+            <label className="font-medium" htmlFor="job">
               Horas de Trabajo:
             </label>
             <input
@@ -272,7 +307,8 @@ function ReportFormPage() {
               }}
               {...register("job", { required: true })}
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
-            ></input>
+              onChange={handleChange}
+            />
             {formErrors.job && (
               <p className="text-red-500 mb-2">El trabajo es requerido</p>
             )}
@@ -286,7 +322,12 @@ function ReportFormPage() {
             </Link>
             <button
               type="submit"
-              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white"
+              disabled={isFormEmpty()}
+              className={`my-4 w-max rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out ${
+                isFormEmpty()
+                  ? "bg-[#336c97] cursor-not-allowed"
+                  : "bg-[#448dc9] hover:bg-[#2a567a] text-white"
+              }`}
             >
               Enviar
             </button>

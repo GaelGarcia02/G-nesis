@@ -3,6 +3,7 @@ import { useUsers } from "../context/UsersContext";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { handleSuccess } from "../utils/sweetAlerts";
+import userLogo from "../assets/user.png";
 
 function ProfilePage() {
   const { setValue } = useForm();
@@ -99,32 +100,43 @@ function ProfilePage() {
   };
 
   return (
-    <div className="mt-10 flex justify-center ">
-      <div className="flex flex-col">
+    <div className="mt-10 flex justify-center">
+      <div className="bg-white rounded-lg shadow-2xl p-8">
         <h1 className="text-3xl font-bold text-center mb-10">Mi Perfil</h1>
-        <div className="flex flex-col mb-8">
+        <div className="flex justify-center mb-14">
+          <img
+            src={userLogo}
+            alt="Imagen del usuario"
+            className="max-w-40% h-auto w-auto /**/ aspect-auto"
+          />
+        </div>
+        <div className="flex justify-between gap-10 mb-8">
           <h1 className="text-xl font-bold">Nombre de Usuario:</h1>
           <p className="text-lg font-normal">{user && user.username}</p>
         </div>
 
-        <div className="flex flex-col mb-8">
+        <div className="flex justify-between mb-8">
           <h1 className="text-xl font-bold">Nombre completo:</h1>
           <p className="text-lg font-normal">{user && user.name}</p>
         </div>
 
-        <div className="flex flex-col mb-8">
+        <div className="flex justify-between mb-8">
           <h1 className="text-xl font-bold">Email:</h1>
           <p className="text-lg font-normal">{user && user.email}</p>
         </div>
 
-        <div className="flex flex-col my-8">
-          <h1 className="text-xl font-bold">Cambio de Contraseña:</h1>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 transition duration-150 ease-in-out text-white font-bold py-2 px-4 mt-4 rounded"
-            onClick={openFirstModal}
-          >
-            Cambiar Contraseña
-          </button>
+        <div className="grid justify-center mt-16 mb-4">
+          <div className="flex flex-col">
+            <h1 className="text-xl flex font-bold">Cambio de Contraseña:</h1>
+            <div className="flex justify-center">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 transition duration-150 w-max ease-in-out text-white font-bold py-2 px-4 mt-4 rounded"
+                onClick={openFirstModal}
+              >
+                Cambiar Contraseña
+              </button>
+            </div>
+          </div>
           {isFirstModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center z-10">
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>

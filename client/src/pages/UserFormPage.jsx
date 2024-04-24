@@ -24,6 +24,12 @@ function UserFormPage() {
   const [resetForm, setResetForm] = useState(false);
   const [title, setTitle] = useState("Agregar Usuario");
   const params = useParams();
+  const [formFields, setFormFields] = useState({
+    username: "",
+    name: "",
+    email: "",
+    typeUser: "",
+  });
 
   useEffect(() => {
     async function loadUser() {
@@ -35,6 +41,7 @@ function UserFormPage() {
         setValue("password", user.password);
         setValue("typeUser", user.typeUser);
         setTitle("Actualizar Usuario");
+        setFormFields(user);
       }
     }
     loadUser();
@@ -89,6 +96,11 @@ function UserFormPage() {
     return regex.test(email);
   };
 
+  // Función para verificar si algún campo está vacío
+  const isFormEmpty = () => {
+    return Object.values(formFields).some((value) => value === "");
+  };
+
   return (
     <div className="flex items-center justify-center flex-col">
       <div className=" mb-10 p-10 w-full /**/ xl:w-40% lg:w-50% md:w-60%">
@@ -104,6 +116,9 @@ function UserFormPage() {
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
               placeholder="Ej: NombreDeUsuario"
               id="username"
+              onChange={(e) =>
+                setFormFields({ ...formFields, username: e.target.value })
+              }
             />
             {formErrors.username && (
               <p className="text-red-500">El nombre de usuario es requerido</p>
@@ -119,6 +134,9 @@ function UserFormPage() {
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
               placeholder="Ej: Sergio Amador"
               id="name"
+              onChange={(e) =>
+                setFormFields({ ...formFields, name: e.target.value })
+              }
             />
             {formErrors.name && (
               <p className="text-red-500">El nombre es requerido</p>
@@ -134,6 +152,9 @@ function UserFormPage() {
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
               placeholder="Ej: example@gmail.com"
               id="email"
+              onChange={(e) =>
+                setFormFields({ ...formFields, email: e.target.value })
+              }
             />
             {formErrors.email && (
               <p className="text-red-500">El email es requerido</p>
@@ -152,6 +173,9 @@ function UserFormPage() {
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
               placeholder="Seleccione el tipo de usuario"
               id="typeUser"
+              onChange={(e) =>
+                setFormFields({ ...formFields, typeUser: e.target.value })
+              }
             >
               <option value="">--Seleccione el tipo de usuario--</option>
               <option value="common">Usuario Normal</option>
@@ -170,7 +194,12 @@ function UserFormPage() {
             </Link>
             <button
               type="submit"
-              className="my-4 w-max bg-[#448dc9] rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out hover:bg-[#2a567a] text-white"
+              disabled={isFormEmpty()}
+              className={`my-4 w-max rounded-2xl font-bold py-2 px-4 transition duration-150 ease-in-out ${
+                isFormEmpty()
+                  ? "bg-[#336c97] cursor-not-allowed"
+                  : "bg-[#448dc9] hover:bg-[#2a567a] text-white"
+              }`}
             >
               Enviar
             </button>
