@@ -142,10 +142,13 @@ function ProfilePage() {
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
               <div className="relative bg-white p-8 rounded-lg">
                 <div className="flex flex-col">
+                  <label className="font-medium" htmlFor="">
+                    Contraseña Actual:
+                  </label>
                   <input
                     type="password"
-                    placeholder="Contraseña Actual"
-                    className="mb-4 px-8 py-2"
+                    placeholder="**********"
+                    className="w-full px-4 py-2 rounded-2xl my-2 border"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                   />
@@ -172,17 +175,23 @@ function ProfilePage() {
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
               <div className="relative bg-white p-8 rounded-lg">
                 <div className="flex flex-col">
+                  <label className="font-medium" htmlFor="">
+                    Nueva Contraseña:
+                  </label>
                   <input
                     type="password"
-                    placeholder="Nueva Contraseña"
-                    className="mb-4 px-8 py-2"
+                    placeholder="**********"
+                    className="w-full px-4 py-2 rounded-2xl my-2 border"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
+                  <label className="font-medium" htmlFor="">
+                    Confirmar Nueva Contraseña:
+                  </label>
                   <input
                     type="password"
-                    placeholder="Confirmar Nueva Contraseña"
-                    className="mb-4 px-8 py-2"
+                    placeholder="**********"
+                    className="w-full px-4 py-2 rounded-2xl my-2 border"
                     value={confirmNewPassword}
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                   />

@@ -22,12 +22,6 @@ export const login = async (req, res) => {
     if (!isMatch)
       return res.status(402).json({ message: "Credenciales Incorrectas" });
 
-    /* if (!userFound.passwordChange) {
-      return res.status(400).json({
-        message: "Debe cambiar la contraseña antes de iniciar sesión",
-      });
-    } */
-
     //Crea el token
     const token = await createAccessToken({
       id: userFound._id,
