@@ -17,6 +17,7 @@ function HorseFormPage() {
     updateHorse,
     errors: horsesErrors,
     horseAdd,
+    sensors, // Esto asumo que contiene la lista de sensores
   } = useHorses();
   const navigate = useNavigate();
   const [resetForm, setResetForm] = useState(false);
@@ -27,6 +28,7 @@ function HorseFormPage() {
     age: "",
     breed: "",
     diseases: "",
+    sensor: "", // Nuevo campo para el ID del sensor seleccionado
   });
 
   useEffect(() => {
@@ -38,6 +40,7 @@ function HorseFormPage() {
         setValue("age", horse.age);
         setValue("breed", horse.breed);
         setValue("diseases", horse.diseases);
+        setValue("sensor", horse.sensor); // Establecer el valor del sensor en el campo de selección
         setTitle("Actualizar Caballo");
         setFormFields(horse);
       }
@@ -185,6 +188,34 @@ function HorseFormPage() {
               <p className="text-red-500 mb-2">
                 Las enfermedades son requeridas
               </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="font-medium" htmlFor="sensor">
+              Sensor:
+            </label>
+            <select
+              id="sensor"
+              name="sensor"
+              {...register("sensor", { required: true })}
+              className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
+              onChange={(e) =>
+                setFormFields({ ...formFields, sensor: e.target.value })
+              }
+            >
+              <option className="text-zinc-400" value="">
+                --Seleccionar sensor--
+              </option>
+              {/* Mapear los sensores para obtener los ID_HORSE */}
+              {sensors.map((sensor) => (
+                <option key={sensor} value={sensor}>
+                  {sensor}
+                </option>
+              ))}
+            </select>
+            {formErrors.sensor && (
+              <p className="text-red-500 mb-2">El sensor es requerido</p>
             )}
           </div>
 

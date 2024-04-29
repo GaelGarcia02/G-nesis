@@ -6,13 +6,28 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
 
 function HorsesPages() {
-  const { getHorses, horses } = useHorses();
+  const { getHorses, horses, getParams } = useHorses(); // Obtener la función getParams del contexto
   const { isAuthenticated, userType } = useAuth();
   const [selectedHorse, setSelectedHorse] = useState(null);
+  const [sensorParams, setSensorParams] = useState(null); // Estado para almacenar los parámetros del sensor
 
   useEffect(() => {
     getHorses();
   }, []);
+
+  useEffect(() => {
+    if (selectedHorse && isAuthenticated) {
+      // Llamar a la función getParams solo si selectedHorse está definido y el usuario está autenticado
+      getParams(selectedHorse.sensor)
+        .then((params) => {
+          setSensorParams(params);
+        })
+        .catch((error) => {
+          console.error("Error fetching sensor params:", error);
+          setSensorParams(null);
+        });
+    }
+  }, [selectedHorse, isAuthenticated]); // Ejecutar el efecto cuando selectedHorse o isAuthenticated cambien
 
   const handleOpenModal = (horse) => {
     setSelectedHorse(horse);
@@ -20,6 +35,7 @@ function HorsesPages() {
 
   const handleCloseModal = () => {
     setSelectedHorse(null);
+    setSensorParams(null); // Limpiar los parámetros del sensor al cerrar el modal
   };
 
   return (
@@ -56,11 +72,12 @@ function HorsesPages() {
         )}
       </div>
 
-      {/* Renderizar el modal */}
+      {/* Renderizar el modal con los parámetros del sensor */}
       <HorseModal
         isOpen={selectedHorse !== null}
         onClose={handleCloseModal}
         horse={selectedHorse}
+        sensorParams={sensorParams} // Pasar los parámetros del sensor al modal
       />
     </div>
   );

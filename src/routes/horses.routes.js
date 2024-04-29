@@ -7,6 +7,8 @@ import {
   showHorses,
   updateHorse,
   horseRegister,
+  showParams,
+  showSensors,
 } from "../controllers/horse.controller.js";
 import { regHorSchema, updHorSchema } from "../schemas/horse.schema.js";
 
@@ -21,6 +23,8 @@ router.post(
 );
 router.get("/horses", authRequired, showHorses);
 router.get("/horses/:id", authRequired, showHorse);
+router.get("/sensors", authRequired, showSensors);
+router.get("/sensors/:sensor", authRequired, showParams);
 router.put(
   "/horses/:id",
   authRequired,

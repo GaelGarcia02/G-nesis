@@ -1,9 +1,10 @@
 import Horse from "../models/horse.model.js";
+import Parameter from "../models/param.model.js";
 
 //* Registrar Caballo
 export const horseRegister = async (req, res) => {
   //Especificas los campos que son requeridos para esta función
-  const { name, age, breed, diseases } = req.body;
+  const { name, age, breed, diseases, sensor } = req.body;
 
   try {
     //Crea el nuevo caballo y lo almacena en una variable
@@ -12,6 +13,7 @@ export const horseRegister = async (req, res) => {
       age,
       breed,
       diseases,
+      sensor,
     });
 
     //Método para guardar al nuevo vaballo en la base de datos
@@ -95,6 +97,51 @@ export const deleteHorse = async (req, res) => {
     res.status(200).json({ message: "Caballo eliminado con éxito" });
   } catch (error) {
     //Error si algo sale mal
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//* Mostrar todos los ID_HORSE únicos
+export const showSensors = async (req, res) => {
+  try {
+    // Utilizamos distinct para obtener todos los valores únicos de ID_HORSE
+    const params = await Parameter.distinct("ID_HORSE");
+
+    // Verificamos si se encontraron ID_HORSE únicos
+    if (!params || params.length === 0) {
+      return res.status(404).json({
+        message: "No se encontraron ID_HORSE únicos en la colección",
+      });
+    }
+
+    // Si se encuentran, enviamos los datos de los ID_HORSE únicos
+    res.json(params);
+  } catch (error) {
+    // Manejo de errores
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//* Mostrar los datos del sensor por ID_HORSE (basado en el campo sensor del modelo del caballo)
+export const showParams = async (req, res) => {
+  try {
+    // Obtener el campo sensor del modelo del caballo
+    const horseSensor = req.params.sensor;
+
+    // Buscar los datos del sensor con el campo sensor proporcionado
+    const sensorData = await Parameter.findOne({ ID_HORSE: horseSensor });
+
+    // Verificar si se encontraron datos del sensor
+    if (!sensorData) {
+      return res.status(404).json({
+        message: "No se encontraron datos del sensor para el campo sensor dado",
+      });
+    }
+
+    // Si se encuentra, enviar los datos del sensor como respuesta
+    res.json(sensorData);
+  } catch (error) {
+    // Manejo de errores
     res.status(500).json({ message: error.message });
   }
 };

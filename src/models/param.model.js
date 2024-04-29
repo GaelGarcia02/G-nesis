@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const horseSchema = new mongoose.Schema({
+const paramsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -21,10 +21,6 @@ const horseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  sensor: {
-    type: String,
-    required: true,
-  },
 });
 
-export default mongoose.model("Horse", horseSchema);
+export default mongoose.model("Parameter", paramsSchema);

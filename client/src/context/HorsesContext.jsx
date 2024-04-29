@@ -1,10 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import {
   createHorseRequest,
   getHorsesRequest,
   deleteHorsesRequest,
   getHorseRequest,
   updateHorsesRequest,
+  getSensorsRequest, // Agregar importación para obtener los sensores
+  getParamsRequest, // Agregar importación para obtener los sensores
 } from "../api/horses";
 
 const HorseContext = createContext();
@@ -21,6 +24,7 @@ export function HorseProvider({ children }) {
   const [horses, setHorses] = useState([]);
   const [errors, setErrors] = useState([]);
   const [horseAdd, setHorseAdd] = useState(false);
+  const [sensors, setSensors] = useState([]);
 
   const getHorses = async () => {
     try {
@@ -30,6 +34,8 @@ export function HorseProvider({ children }) {
       console.log(error);
     }
   };
+
+  const { isAuthenticated } = useAuth();
 
   const createHorse = async (horse) => {
     try {
@@ -74,6 +80,30 @@ export function HorseProvider({ children }) {
     }
   };
 
+  const getAvailableSensors = async () => {
+    try {
+      const res = await getSensorsRequest(); // Obtener la lista de sensores
+      setSensors(res.data); // Actualizar el estado con la lista de sensores
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getParams = async (idSensor) => {
+    try {
+      const res = await getParamsRequest(idSensor);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAvailableSensors(); // Llamar a la función para obtener la lista de sensores solo si el usuario está autenticado
+    }
+  }, [isAuthenticated]); // Asegúrate de que esta useEffect se ejecute cada vez que cambie el estado de autenticación
+
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -94,6 +124,8 @@ export function HorseProvider({ children }) {
         horses,
         errors,
         horseAdd,
+        sensors, // Agregar la lista de sensores al contexto
+        getParams,
       }}
     >
       {children}

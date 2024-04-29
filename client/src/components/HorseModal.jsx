@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHorses } from "../context/HorsesContext.jsx";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { handleDelete } from "../utils/sweetAlerts.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSun,
+  faHeartbeat,
+  faShoePrints,
+} from "@fortawesome/free-solid-svg-icons";
 
 const HorseModal = ({ isOpen, onClose, horse }) => {
-  const { deleteHorse } = useHorses();
+  const { deleteHorse, getParams } = useHorses();
   const { isAuthenticated, userType } = useAuth();
+  const [sensorParams, setSensorParams] = useState(null);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    const fetchSensorParams = async () => {
+      try {
+        const response = await getParams(horse.sensor);
+        setSensorParams(response);
+      } catch (error) {
+        console.error("Error fetching sensor params:", error);
+      }
+    };
+
+    if (isOpen && horse && horse.sensor) {
+      fetchSensorParams();
+    }
+  }, [isOpen, horse, getParams]);
+
+  if (!isOpen || !horse) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -32,28 +54,79 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
             />
           </svg>
         </button>
-        <header>
-          <h2 className="text-xl text-center font-bold mb-10">{horse.name}</h2>
-        </header>
-        <div>
+        <div className="mb-12">
+          <h3 className="text-xl font-bold text-center mt-4 mb-4">
+            Datos de {horse.name}:
+          </h3>
           <ul className="flex flex-col space-y-2">
             <li className="flex justify-between">
-              <span className="font-bold">Edad:</span>
+              <span className="font-semibold">Edad:</span>
               <span>{horse.age} años</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-bold">Raza:</span>
+              <span className="font-semibold">Raza:</span>
               <span>{horse.breed}</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-bold">Enfermedades:</span>
+              <span className="font-semibold">Enfermedades:</span>
               <span>{horse.diseases}</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-semibold">Sensor:</span>
+              <span>{horse.sensor}</span>
             </li>
           </ul>
         </div>
+
+        {sensorParams && (
+          <div className="mb-10">
+            <h3 className="text-xl font-bold text-center mt-4 mb-4">
+              Datos del sensor:
+            </h3>
+            <ul className="flex flex-col space-y-2">
+              <li className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <FontAwesomeIcon
+                    icon={faSun}
+                    className="text-yellow-500 mr-2"
+                  />
+                  <span className="font-semibold">Nivel de Luz:</span>
+                </div>
+                <span>{sensorParams.nivel_luz}</span>
+              </li>
+              <li className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <FontAwesomeIcon
+                    icon={faHeartbeat}
+                    className="text-red-500 mr-2"
+                  />
+                  <span className="font-semibold">BPM:</span>
+                </div>
+                <span>{sensorParams.bpm} BpM</span>
+              </li>
+              <li className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <FontAwesomeIcon
+                    icon={faShoePrints}
+                    className="text-blue-500 mr-2"
+                  />
+                  <span className="font-semibold">Conteo de pasos:</span>
+                </div>
+                <span>{sensorParams.conto_pasos} pasos</span>
+              </li>
+            </ul>
+          </div>
+        )}
+
         {isAuthenticated &&
           (userType === "admin" || userType === "superadmin") && (
-            <footer className="flex justify-end mt-6 space-x-4">
+            <footer className="flex justify-center mt-6 space-x-4">
+              <Link
+                to={`/horses/${horse._id}`}
+                className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500"
+              >
+                Editar
+              </Link>
               <button
                 onClick={() => {
                   handleDelete(horse._id, deleteHorse, "caballo");
@@ -63,12 +136,6 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
               >
                 Eliminar
               </button>
-              <Link
-                to={`/horses/${horse._id}`}
-                className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500"
-              >
-                Editar
-              </Link>
             </footer>
           )}
       </div>

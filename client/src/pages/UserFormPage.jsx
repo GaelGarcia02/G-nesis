@@ -177,7 +177,9 @@ function UserFormPage() {
                 setFormFields({ ...formFields, typeUser: e.target.value })
               }
             >
-              <option value="">--Seleccione el tipo de usuario--</option>
+              <option className="text-zinc-400" value="">
+                --Seleccione el tipo de usuario--
+              </option>
               <option value="common">Usuario Normal</option>
               <option value="manager">Usuario Encargado</option>
             </select>

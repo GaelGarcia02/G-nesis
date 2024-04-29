@@ -153,7 +153,10 @@ function ReportFormPage() {
               className="w-full px-4 py-2 rounded-2xl mb-2 border border-black"
               onChange={handleChange}
             >
-              <option value=""> -- Selecciona un Caballo -- </option>
+              <option className="text-zinc-400" value="">
+                {" "}
+                -- Selecciona un Caballo --{" "}
+              </option>
               {horses.map((horse) => (
                 <option key={horse._id} value={horse.name}>
                   {horse.name}
