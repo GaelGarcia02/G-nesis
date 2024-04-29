@@ -17,7 +17,7 @@ function HorseFormPage() {
     updateHorse,
     errors: horsesErrors,
     horseAdd,
-    sensors, // Esto asumo que contiene la lista de sensores
+    sensors,
   } = useHorses();
   const navigate = useNavigate();
   const [resetForm, setResetForm] = useState(false);

@@ -105,7 +105,7 @@ export const deleteHorse = async (req, res) => {
 export const showSensors = async (req, res) => {
   try {
     // Utilizamos distinct para obtener todos los valores únicos de ID_HORSE
-    const params = await Parameter.distinct("ID_HORSE");
+    const params = await Parameter.distinct("id_sensor");
 
     // Verificamos si se encontraron ID_HORSE únicos
     if (!params || params.length === 0) {
@@ -129,7 +129,7 @@ export const showParams = async (req, res) => {
     const horseSensor = req.params.sensor;
 
     // Buscar los datos del sensor con el campo sensor proporcionado
-    const sensorData = await Parameter.findOne({ ID_HORSE: horseSensor });
+    const sensorData = await Parameter.findOne({ id_sensor: horseSensor });
 
     // Verificar si se encontraron datos del sensor
     if (!sensorData) {
