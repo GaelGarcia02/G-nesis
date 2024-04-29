@@ -35,7 +35,6 @@ function HorseFormPage() {
     async function loadHorse() {
       if (params.id) {
         const horse = await getHorse(params.id);
-        console.log(horse);
         setValue("name", horse.name);
         setValue("age", horse.age);
         setValue("breed", horse.breed);

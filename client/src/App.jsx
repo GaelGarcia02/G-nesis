@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext.jsx";
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 
 import RegisterUserPage from "./pages/UserFormPage";
 import UsersPage from "./pages/UsersPage";
@@ -44,41 +44,64 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
+  const { userType } = useAuth();
   const isLoginPage = location.pathname === "/";
   const isVerificationPage = location.pathname.startsWith("/verification/");
   const isNotFoundPage = location.pathname === "/404"; // Cambiamos a la ruta correcta de la página 404
 
-  const allowedRoutes = ["/horses", "/vets", "/users", "/reports", "/profile"];
+  // Definimos las rutas no permitidas para cada tipo de usuario
+  const disallowedRoutes = {
+    admin: ["/reports/add", "reports/:id"],
+    manager: ["/users/", "/users/add", "/users/:id"],
+    common: [
+      "/users/",
+      "/users/add",
+      "/users/:id",
+      "/reports/add",
+      "/reports/:id",
+      "/vets/add",
+      "/vets/:id",
+      "/horses/add",
+      "/horses/:id",
+    ],
+  };
+
+  // Obtenemos las rutas no permitidas para el tipo de usuario actual
+  const userDisallowedRoutes = disallowedRoutes[userType] || [];
 
   // Verificamos si la ruta actual corresponde a una de las páginas en las que queremos mostrar el Navbar
-  const shouldShowNavbar = allowedRoutes.some((route) =>
-    location.pathname.startsWith(route)
-  );
+  const shouldShowNavbar =
+    !isLoginPage && !isVerificationPage && !isNotFoundPage;
 
   return (
     <>
-      {shouldShowNavbar &&
-        !isLoginPage &&
-        !isVerificationPage &&
-        !isNotFoundPage && <Navbar />}{" "}
+      {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
 
         {!isLoginPage && (
           <Route element={<ProtectedRoute />}>
-            <Route path="/horses" element={<HorsesPages />} />
+            {userDisallowedRoutes.map((route) => (
+              <Route
+                key={route}
+                path={route}
+                element={<NotFoundPage />} // Utilizamos NotFoundPage como elemento de ruta para rutas no permitidas
+              />
+            ))}
+
+            <Route path="/horses/" element={<HorsesPages />} />
             <Route path="/horses/add" element={<HorseFormPage />} />
             <Route path="/horses/:id" element={<HorseFormPage />} />
 
-            <Route path="/vets" element={<VetsPage />} />
+            <Route path="/vets/" element={<VetsPage />} />
             <Route path="/vets/add" element={<VetsFormPage />} />
             <Route path="/vets/:id" element={<VetsFormPage />} />
 
-            <Route path="/users" element={<UsersPage />} />
+            <Route path="/users/" element={<UsersPage />} />
             <Route path="/users/add" element={<RegisterUserPage />} />
             <Route path="/users/:id" element={<RegisterUserPage />} />
 
-            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/reports/" element={<ReportsPage />} />
             <Route path="/reports/add" element={<ReportsFormPage />} />
             <Route path="/reports/:id" element={<ReportsFormPage />} />
 

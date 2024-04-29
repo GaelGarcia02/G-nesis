@@ -118,26 +118,25 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
           </div>
         )}
 
-        {isAuthenticated &&
-          (userType === "admin" || userType === "superadmin") && (
-            <footer className="flex justify-center mt-6 space-x-4">
-              <Link
-                to={`/horses/${horse._id}`}
-                className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500"
-              >
-                Editar
-              </Link>
-              <button
-                onClick={() => {
-                  handleDelete(horse._id, deleteHorse, "caballo");
-                  onClose();
-                }}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
-                Eliminar
-              </button>
-            </footer>
-          )}
+        {isAuthenticated && userType !== "common" && (
+          <footer className="flex justify-center mt-6 space-x-4">
+            <Link
+              to={`/horses/${horse._id}`}
+              className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500"
+            >
+              Editar
+            </Link>
+            <button
+              onClick={() => {
+                handleDelete(horse._id, deleteHorse, "caballo");
+                onClose();
+              }}
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Eliminar
+            </button>
+          </footer>
+        )}
       </div>
     </div>
   );
