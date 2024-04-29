@@ -62,13 +62,11 @@ function ReportFormPage() {
               job: report.job,
             });
           } else {
-            // Si no se encuentra el reporte, redirigir al usuario a una página de error o a la página principal
-            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+            navigate("/error");
           }
         } catch (error) {
           console.error(error);
-          // Manejar el error
-          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          navigate("/error");
         }
       }
     }

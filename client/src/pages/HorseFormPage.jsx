@@ -28,7 +28,7 @@ function HorseFormPage() {
     age: "",
     breed: "",
     diseases: "",
-    sensor: "", // Nuevo campo para el ID del sensor seleccionado
+    sensor: "",
   });
 
   useEffect(() => {
@@ -41,17 +41,16 @@ function HorseFormPage() {
             setValue("age", horse.age);
             setValue("breed", horse.breed);
             setValue("diseases", horse.diseases);
-            setValue("sensor", horse.sensor); // Establecer el valor del sensor en el campo de selección
+            setValue("sensor", horse.sensor);
             setTitle("Actualizar Caballo");
             setFormFields(horse);
           } else {
-            // Si no se encuentra el caballo, redirigir al usuario a una página de error o a la página principal
-            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+            navigate("/error");
           }
         } catch (error) {
           console.error(error);
           // Manejar el error
-          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          navigate("/error");
         }
       }
     }
@@ -98,7 +97,6 @@ function HorseFormPage() {
     }
   }, [horsesErrors]);
 
-  // Función para verificar si algún campo está vacío
   const isFormEmpty = () => {
     return Object.values(formFields).some((value) => value === "");
   };
@@ -217,7 +215,6 @@ function HorseFormPage() {
               <option className="text-zinc-400" value="">
                 --Seleccionar sensor--
               </option>
-              {/* Mapear los sensores para obtener los ID_HORSE */}
               {sensors.map((sensor) => (
                 <option key={sensor} value={sensor}>
                   {sensor}

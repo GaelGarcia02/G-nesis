@@ -65,7 +65,6 @@ function ProfilePage() {
 
   const handleFirstModalConfirm = async () => {
     try {
-      // Verificar la contraseña actual
       const isPasswordCorrect = await verifyPassword(user._id, currentPassword);
 
       if (!isPasswordCorrect) {
@@ -73,7 +72,6 @@ function ProfilePage() {
         return;
       }
 
-      // Limpiar el error y abrir el segundo modal
       setError("");
       openSecondModal();
     } catch (error) {
@@ -84,22 +82,18 @@ function ProfilePage() {
 
   const handleSecondModalConfirm = async () => {
     try {
-      // Validar contraseñas
       if (newPassword !== confirmNewPassword) {
         setError("Las contraseñas no coinciden");
         return;
       }
 
-      // Actualizar la contraseña
       await updateUser(params.id, { password: newPassword });
 
-      // Limpiar campos y errores
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
       setError("");
 
-      // Cerrar modal
       closeSecondModal();
       handleSuccess("Contraseña actualizada correctamente");
     } catch (error) {

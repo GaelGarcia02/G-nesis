@@ -44,13 +44,11 @@ function VetFormPage() {
             setTitle("Actualizar Veterinario");
             setFormFields(vet);
           } else {
-            // Si no se encuentra el veterinario, redirigir al usuario a una página de error o a la página principal
-            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+            navigate("/error");
           }
         } catch (error) {
           console.error(error);
-          // Manejar el error
-          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          navigate("/error");
         }
       }
     }

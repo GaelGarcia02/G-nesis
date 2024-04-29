@@ -23,7 +23,7 @@ export function UserProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState([]);
   const [userAdd, setUserAdd] = useState(false);
-  const [isVerified, setIsVerified] = useState(false); // Nuevo estado
+  const [isVerified, setIsVerified] = useState(false);
 
   const getUsers = async () => {
     try {
@@ -55,7 +55,6 @@ export function UserProvider({ children }) {
   const createUser = async (userData) => {
     try {
       const res = await createUserRequest(userData);
-      // Agregar el nuevo usuario a la lista existente
       setUsers((prevUsers) => [...prevUsers, res.data]);
       setUserAdd(true);
       setErrors([]);

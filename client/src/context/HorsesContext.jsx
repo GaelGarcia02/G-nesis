@@ -6,8 +6,8 @@ import {
   deleteHorsesRequest,
   getHorseRequest,
   updateHorsesRequest,
-  getSensorsRequest, // Agregar importación para obtener los sensores
-  getParamsRequest, // Agregar importación para obtener los sensores
+  getSensorsRequest,
+  getParamsRequest,
 } from "../api/horses";
 
 const HorseContext = createContext();
@@ -41,7 +41,6 @@ export function HorseProvider({ children }) {
     try {
       const res = await createHorseRequest(horse);
       console.log(res.data);
-      // Agregar el nuevo caballo a la lista existente
       setHorses((prevHorses) => [...prevHorses, res.data]);
       setHorseAdd(true);
     } catch (error) {
@@ -82,8 +81,8 @@ export function HorseProvider({ children }) {
 
   const getAvailableSensors = async () => {
     try {
-      const res = await getSensorsRequest(); // Obtener la lista de sensores
-      setSensors(res.data); // Actualizar el estado con la lista de sensores
+      const res = await getSensorsRequest();
+      setSensors(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -100,9 +99,9 @@ export function HorseProvider({ children }) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getAvailableSensors(); // Llamar a la función para obtener la lista de sensores solo si el usuario está autenticado
+      getAvailableSensors();
     }
-  }, [isAuthenticated]); // Asegúrate de que esta useEffect se ejecute cada vez que cambie el estado de autenticación
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -124,7 +123,7 @@ export function HorseProvider({ children }) {
         horses,
         errors,
         horseAdd,
-        sensors, // Agregar la lista de sensores al contexto
+        sensors,
         getParams,
       }}
     >

@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { handleDelete } from "../utils/sweetAlerts.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSun,
-  faHeartbeat,
-  faShoePrints,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSun, faHeartbeat, faBolt } from "@fortawesome/free-solid-svg-icons";
 
 const HorseModal = ({ isOpen, onClose, horse }) => {
   const { deleteHorse, getParams } = useHorses();
@@ -107,12 +103,13 @@ const HorseModal = ({ isOpen, onClose, horse }) => {
               <li className="flex justify-between items-center">
                 <div className="flex items-center">
                   <FontAwesomeIcon
-                    icon={faShoePrints}
+                    icon={faBolt}
                     className="text-blue-500 mr-2"
                   />
-                  <span className="font-semibold">Conteo de pasos:</span>
+
+                  <span className="font-semibold">Velocidad:</span>
                 </div>
-                <span>{sensorParams.conto_pasos} pasos</span>
+                <span>{sensorParams.conto_pasos} km/h</span>
               </li>
             </ul>
           </div>

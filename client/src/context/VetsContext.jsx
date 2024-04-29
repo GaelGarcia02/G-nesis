@@ -35,7 +35,6 @@ export function VetProvider({ children }) {
     try {
       const res = await createVetRequest(vet);
       console.log(res.data);
-      // Agregar el nuevo veterinario a la lista existente
       setVets((prevVets) => [...prevVets, res.data]);
       setVetAdd(true);
     } catch (error) {

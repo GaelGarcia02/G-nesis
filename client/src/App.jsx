@@ -47,9 +47,8 @@ function AppContent() {
   const { userType } = useAuth();
   const isLoginPage = location.pathname === "/";
   const isVerificationPage = location.pathname.startsWith("/verification/");
-  const isNotFoundPage = location.pathname === "/404"; // Cambiamos a la ruta correcta de la página 404
+  const isNotFoundPage = location.pathname === "/404";
 
-  // Definimos las rutas no permitidas para cada tipo de usuario
   const disallowedRoutes = {
     admin: ["/reports/add", "reports/:id"],
     manager: ["/users/", "/users/add", "/users/:id"],
@@ -66,10 +65,8 @@ function AppContent() {
     ],
   };
 
-  // Obtenemos las rutas no permitidas para el tipo de usuario actual
   const userDisallowedRoutes = disallowedRoutes[userType] || [];
 
-  // Verificamos si la ruta actual corresponde a una de las páginas en las que queremos mostrar el Navbar
   const shouldShowNavbar =
     !isLoginPage && !isVerificationPage && !isNotFoundPage;
 
@@ -82,11 +79,7 @@ function AppContent() {
         {!isLoginPage && (
           <Route element={<ProtectedRoute />}>
             {userDisallowedRoutes.map((route) => (
-              <Route
-                key={route}
-                path={route}
-                element={<NotFoundPage />} // Utilizamos NotFoundPage como elemento de ruta para rutas no permitidas
-              />
+              <Route key={route} path={route} element={<NotFoundPage />} />
             ))}
 
             <Route path="/horses/" element={<HorsesPages />} />

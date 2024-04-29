@@ -11,6 +11,6 @@ export const updateHorsesRequest = (id, horse) =>
 
 export const deleteHorsesRequest = (id) => axios.delete(`/horses/${id}`);
 
-export const getSensorsRequest = () => axios.get("/sensors"); // Función para obtener la lista de sensores
+export const getSensorsRequest = () => axios.get("/sensors");
 
 export const getParamsRequest = (idSensor) => axios.get(`/sensors/${idSensor}`);

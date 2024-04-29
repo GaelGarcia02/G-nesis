@@ -56,11 +56,6 @@ function LoginPage() {
           ¡Bienvenido!
         </h1>
         <div className="bg-white w-full max-w-full p-10 rounded-lg mb-10 /**/ lg:mb-0 sm:max-w-85% xl:max-w-70%">
-          {/*           {signinErrors.map((error, i) => (
-            <div className="bg-red-500 p-2 mb-4 text-white text-center" key={i}>
-              {error}
-            </div>
-          ))} */}
           <h1 className="text-2xl lg:mb-8 mb-4 text-center font-extrabold">
             Inicio de Sesión
           </h1>

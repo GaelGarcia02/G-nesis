@@ -50,7 +50,7 @@ function UserFormPage() {
         } catch (error) {
           console.error(error);
           // Manejar el error
-          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          navigate("/error");
         }
       }
     }
@@ -101,12 +101,10 @@ function UserFormPage() {
   }, [usersErrors]);
 
   const validateEmail = (email) => {
-    // Utiliza una expresión regular para validar el formato del correo electrónico
     const regex = /^[^\s@]+@[^\s@]+\.(com|co)$/i;
     return regex.test(email);
   };
 
-  // Función para verificar si algún campo está vacío
   const isFormEmpty = () => {
     return Object.values(formFields).some((value) => value === "");
   };
