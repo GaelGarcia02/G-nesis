@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUsers } from "../context/UsersContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Importa useNavigate
 import { useForm } from "react-hook-form";
 import { handleSuccess } from "../utils/sweetAlerts";
 import userLogo from "../assets/user.png";
@@ -9,6 +9,7 @@ function ProfilePage() {
   const { setValue } = useForm();
   const { getUser, updateUser, verifyPassword } = useUsers();
   const params = useParams();
+  const navigate = useNavigate(); // Usa useNavigate para la navegación
   const [user, setUser] = useState(null);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -20,16 +21,24 @@ function ProfilePage() {
   useEffect(() => {
     async function loadUser() {
       if (params.id) {
-        const userData = await getUser(params.id);
-        setUser(userData);
-        setValue("username", userData.username);
-        setValue("name", userData.name);
-        setValue("email", userData.email);
-        setValue("typeUser", userData.typeUser);
+        try {
+          const userData = await getUser(params.id);
+          setUser(userData);
+          setValue("username", userData.username);
+          setValue("name", userData.name);
+          setValue("email", userData.email);
+          setValue("typeUser", userData.typeUser);
+        } catch (error) {
+          // Error al cargar el usuario, redirige a la página de error
+          navigate("/error");
+        }
+      } else {
+        // Si no hay un ID proporcionado, redirige a la página de error
+        navigate("/error");
       }
     }
     loadUser();
-  }, [params.id]);
+  }, [params.id, navigate, getUser, setValue]);
 
   const openFirstModal = () => {
     setIsFirstModalOpen(true);
