@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FiMenu } from "react-icons/fi";
 import { confirmLogout } from "../utils/sweetAlerts";
@@ -8,6 +8,7 @@ import { confirmLogout } from "../utils/sweetAlerts";
 function Navbar() {
   const { user, logout, isAuthenticated, userType } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation(); // Obtener la ubicación actual
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -39,7 +40,10 @@ function Navbar() {
         <li>
           <Link
             to="/horses"
-            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3 ${
+              location.pathname === "/horses" ? "bg-[#2a567a]" : ""
+            }`}
+            onClick={handleLinkClick}
           >
             Inicio
           </Link>
@@ -50,7 +54,9 @@ function Navbar() {
             <li>
               <Link
                 to="/users"
-                className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
+                className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3 ${
+                  location.pathname === "/users" ? "bg-[#2a567a]" : ""
+                }`}
               >
                 Usuarios
               </Link>
@@ -60,7 +66,9 @@ function Navbar() {
         <li>
           <Link
             to="/vets"
-            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3 ${
+              location.pathname === "/vets" ? "bg-[#2a567a]" : ""
+            }`}
           >
             Veterinarios
           </Link>
@@ -71,7 +79,9 @@ function Navbar() {
         <li>
           <Link
             to="/reports"
-            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3 ${
+              location.pathname === "/reports" ? "bg-[#2a567a]" : ""
+            }`}
           >
             Reportes
           </Link>
@@ -80,7 +90,9 @@ function Navbar() {
         <li>
           <Link
             to={user ? `profile/${user.id}` : "/"}
-            className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3"
+            className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-6 py-3 ${
+              location.pathname.startsWith("/profile") ? "bg-[#2a567a]" : ""
+            }`}
           >
             Perfil
           </Link>
@@ -108,7 +120,9 @@ function Navbar() {
             <Link
               to="/horses"
               onClick={handleLinkClick}
-              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className={`transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6 ${
+                location.pathname === "/horses" ? "bg-[#2a567a]" : ""
+              }`}
             >
               Inicio
             </Link>
@@ -116,7 +130,9 @@ function Navbar() {
               <Link
                 to="/users"
                 onClick={handleLinkClick}
-                className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+                className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6 ${
+                  location.pathname === "/users" ? "bg-[#2a567a]" : ""
+                }`}
               >
                 Usuarios
               </Link>
@@ -124,14 +140,18 @@ function Navbar() {
             <Link
               to="/vets"
               onClick={handleLinkClick}
-              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6 ${
+                location.pathname === "/vets" ? "bg-[#2a567a]" : ""
+              }`}
             >
               Veterinarios
             </Link>
             <Link
               to="/reports"
               onClick={handleLinkClick}
-              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6 ${
+                location.pathname === "/reports" ? "bg-[#2a567a]" : ""
+              }`}
             >
               Reportes
             </Link>
@@ -139,7 +159,9 @@ function Navbar() {
             <Link
               to={user ? `profile/${user.id}` : "/"}
               onClick={handleLinkClick}
-              className="hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6"
+              className={`hover:bg-[#2a567a] transition duration-50 rounded-md ease-in-out px-4 py-2 mb-6 ${
+                location.pathname.startsWith("/profile") ? "bg-[#2a567a]" : ""
+              }`}
             >
               Perfil
             </Link>
