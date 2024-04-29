@@ -38,32 +38,42 @@ function ReportFormPage() {
   useEffect(() => {
     async function loadReport() {
       if (params.id) {
-        const report = await getReport(params.id);
-        console.log(report);
-        setValue("namehorse", report.namehorse);
-        setValue("medicines", report.medicines);
-        setValue("specifications", report.specifications);
-        setValue("food", report.food);
-        setValue("horseshoes", report.horseshoes);
-        setValue("job", report.job);
-        setTitle("Actualizar Reporte");
+        try {
+          const report = await getReport(params.id);
+          if (report) {
+            setValue("namehorse", report.namehorse);
+            setValue("medicines", report.medicines);
+            setValue("specifications", report.specifications);
+            setValue("food", report.food);
+            setValue("horseshoes", report.horseshoes);
+            setValue("job", report.job);
+            setTitle("Actualizar Reporte");
 
-        setSelectedMedicines(
-          report.medicines.split(",").map((medicine) => medicine.trim())
-        );
-        setFormFields({
-          ...formFields,
-          namehorse: report.namehorse,
-          medicines: report.medicines,
-          specifications: report.specifications,
-          food: report.food,
-          horseshoes: report.horseshoes,
-          job: report.job,
-        });
+            setSelectedMedicines(
+              report.medicines.split(",").map((medicine) => medicine.trim())
+            );
+            setFormFields({
+              ...formFields,
+              namehorse: report.namehorse,
+              medicines: report.medicines,
+              specifications: report.specifications,
+              food: report.food,
+              horseshoes: report.horseshoes,
+              job: report.job,
+            });
+          } else {
+            // Si no se encuentra el reporte, redirigir al usuario a una página de error o a la página principal
+            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          }
+        } catch (error) {
+          console.error(error);
+          // Manejar el error
+          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+        }
       }
     }
     loadReport();
-  }, []);
+  }, [params.id, getReport, setValue, navigate]);
 
   useEffect(() => {
     getHorses();

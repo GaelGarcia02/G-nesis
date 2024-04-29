@@ -33,18 +33,29 @@ function VetFormPage() {
   useEffect(() => {
     async function loadVet() {
       if (params.id) {
-        const vet = await getVet(params.id);
-        setValue("firstName", vet.firstName);
-        setValue("lastName", vet.lastName);
-        setValue("age", vet.age);
-        setValue("email", vet.email);
-        setValue("phone", vet.phone);
-        setTitle("Actualizar Veterinario");
-        setFormFields(vet);
+        try {
+          const vet = await getVet(params.id);
+          if (vet) {
+            setValue("firstName", vet.firstName);
+            setValue("lastName", vet.lastName);
+            setValue("age", vet.age);
+            setValue("email", vet.email);
+            setValue("phone", vet.phone);
+            setTitle("Actualizar Veterinario");
+            setFormFields(vet);
+          } else {
+            // Si no se encuentra el veterinario, redirigir al usuario a una página de error o a la página principal
+            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          }
+        } catch (error) {
+          console.error(error);
+          // Manejar el error
+          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+        }
       }
     }
     loadVet();
-  }, []);
+  }, [params.id, getVet, setValue, navigate]);
 
   const isFormEmpty = () => {
     return Object.values(formFields).some((value) => value === "");

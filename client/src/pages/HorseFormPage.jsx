@@ -34,18 +34,29 @@ function HorseFormPage() {
   useEffect(() => {
     async function loadHorse() {
       if (params.id) {
-        const horse = await getHorse(params.id);
-        setValue("name", horse.name);
-        setValue("age", horse.age);
-        setValue("breed", horse.breed);
-        setValue("diseases", horse.diseases);
-        setValue("sensor", horse.sensor); // Establecer el valor del sensor en el campo de selección
-        setTitle("Actualizar Caballo");
-        setFormFields(horse);
+        try {
+          const horse = await getHorse(params.id);
+          if (horse) {
+            setValue("name", horse.name);
+            setValue("age", horse.age);
+            setValue("breed", horse.breed);
+            setValue("diseases", horse.diseases);
+            setValue("sensor", horse.sensor); // Establecer el valor del sensor en el campo de selección
+            setTitle("Actualizar Caballo");
+            setFormFields(horse);
+          } else {
+            // Si no se encuentra el caballo, redirigir al usuario a una página de error o a la página principal
+            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          }
+        } catch (error) {
+          console.error(error);
+          // Manejar el error
+          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+        }
       }
     }
     loadHorse();
-  }, []);
+  }, [params.id, getHorse, setValue, navigate]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {

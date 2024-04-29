@@ -34,18 +34,28 @@ function UserFormPage() {
   useEffect(() => {
     async function loadUser() {
       if (params.id) {
-        const user = await getUser(params.id);
-        setValue("username", user.username);
-        setValue("name", user.name);
-        setValue("email", user.email);
-        setValue("password", user.password);
-        setValue("typeUser", user.typeUser);
-        setTitle("Actualizar Usuario");
-        setFormFields(user);
+        try {
+          const user = await getUser(params.id);
+          if (user) {
+            setValue("username", user.username);
+            setValue("name", user.name);
+            setValue("email", user.email);
+            setValue("typeUser", user.typeUser);
+            setTitle("Actualizar Usuario");
+            setFormFields(user);
+          } else {
+            // Si no se encuentra el usuario, redirigir al usuario a una página de error o a la página principal
+            navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+          }
+        } catch (error) {
+          console.error(error);
+          // Manejar el error
+          navigate("/error"); // Puedes cambiar "/error" por la ruta que desees
+        }
       }
     }
     loadUser();
-  }, []);
+  }, [params.id, getUser, setValue, navigate]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
