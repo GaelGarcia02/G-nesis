@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setUserType(null);
       setLoading(false);
+      window.location.href = "/"; // Redireccionar a la ruta "/"
     } catch (error) {
       console.log(error);
       setErrors(["Error al cerrar sesión"]);
