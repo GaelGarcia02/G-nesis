@@ -6,7 +6,7 @@ export function createAccessToken(payload) {
     // Agregar typeUser al payload si existe
     const payloadWithUserType = {
       ...payload,
-      typeUser: payload.typeUser, // Incluye typeUser en el payload si está presente
+      typeUser: payload.typeUser,
     };
 
     // Firmar el token con el payload actualizado

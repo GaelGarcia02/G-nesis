@@ -101,7 +101,7 @@ export const deleteHorse = async (req, res) => {
   }
 };
 
-//* Mostrar todos los ID_HORSE únicos
+//* Mostrar todos los sensores
 export const showSensors = async (req, res) => {
   try {
     // Utilizamos distinct para obtener todos los valores únicos de ID_HORSE
@@ -122,7 +122,7 @@ export const showSensors = async (req, res) => {
   }
 };
 
-//* Mostrar los datos del sensor por ID_HORSE (basado en el campo sensor del modelo del caballo)
+//* Mostrar los datos del sensor
 export const showParams = async (req, res) => {
   try {
     // Obtener el campo sensor del modelo del caballo

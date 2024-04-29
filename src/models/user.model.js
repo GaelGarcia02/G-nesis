@@ -23,12 +23,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "123456789",
     set: function (password) {
-      // Verificar si la contraseña ingresada es igual a la contraseña por defecto
       if (password === "123456789") {
-        const saltRounds = 10; // Número de rondas de hashing
+        const saltRounds = 10;
         return bcrypt.hashSync(password, saltRounds);
       } else {
-        return password; // Devolver la contraseña ingresada sin encriptar
+        return password;
       }
     },
   },
